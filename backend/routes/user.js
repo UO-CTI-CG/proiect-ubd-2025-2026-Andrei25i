@@ -3,7 +3,7 @@ import db from "../db.js";
 
 const router = express.Router();
 
-// User details with their ads
+// GET user details with their ads
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 

@@ -3,7 +3,7 @@ import db from "../db.js";
 
 const router = express.Router();
 
-// All categories
+// GET all categories
 router.get("/", async (req, res) => {
   const queryText = `
         SELECT * from categories
@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// A specific category
+// GET a specific category
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
