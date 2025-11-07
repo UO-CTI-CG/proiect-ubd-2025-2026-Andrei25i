@@ -5,6 +5,7 @@ import adsRouter from "./routes/ads.js";
 import categoriesRouter from "./routes/categories.js";
 import userRouter from "./routes/user.js";
 import authRouter from "./routes/auth.js";
+import favoritesRouter from "./routes/favorites.js";
 import authLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use("/api/ads", adsRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/user", userRouter);
 app.use("/api/auth", authLimiter, authRouter);
+app.use("/api/favorites", favoritesRouter)
 
 app.listen(PORT, () => {
     console.log(`Serverul ruleaza pe http://localhost:${PORT}`);
