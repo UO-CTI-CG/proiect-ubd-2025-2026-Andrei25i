@@ -4,21 +4,61 @@ import authMiddleware from "../middleware/auth.js";
 
 const router = express.Router();
 
-// GET all ads
+// GET all ads with filters and sorting
 router.get("/", async (req, res) => {
-  const queryText = `
-        SELECT 
-            ads.id, ads.title, ads.description, ads.price, ads.image_url, ads.created_at,
-            users.first_name, users.city,
-            categories.name AS category_name
-        FROM ads
-        LEFT JOIN users ON ads.user_id = users.id
-        LEFT JOIN categories ON ads.category_id = categories.id
-        ORDER BY ads.created_at DESC;
+  const { search, category, minPrice, maxPrice, sort} = req.query;
+
+  let queryText = `
+      SELECT 
+          ads.id, ads.title, ads.description, ads.price, ads.image_url, ads.created_at,
+          users.first_name, users.city,
+          categories.name AS category_name
+      FROM ads
+      LEFT JOIN users ON ads.user_id = users.id
+      LEFT JOIN categories ON ads.category_id = categories.id
     `;
 
+    const conditions = [];
+    const params = [];
+
+    if (search) {
+      params.push(search);
+      conditions.push(`ads.title ILIKE '%' || $${params.length} || '%'`);
+    }
+
+    if (category) {
+      params.push(category);
+      conditions.push(`ads.category_id = $${params.length}`);
+    }
+
+    if (maxPrice) {
+      params.push(maxPrice);
+      conditions.push(`ads.price <= $${params.length}`);
+    }
+
+    if (minPrice) {
+      params.push(minPrice);
+      conditions.push(`ads.price >= $${params.length}`);
+    }
+
+    if (conditions.length > 0) {
+      queryText += ` WHERE ${conditions.join(' AND ')}`;
+    }
+
+    const sortOptions = {
+      'price_asc': 'ads.price ASC',
+      'price_desc': 'ads.price DESC',
+      'date_asc': 'ads.created_at ASC',
+      'date_desc': 'ads.created_at DESC',
+      'name_asc': 'LOWER(ads.title) ASC',
+      'name_desc': 'LOWER(ads.title) DESC'
+    };
+
+    let orderByClause = sortOptions[sort] || sortOptions['date_desc'];
+    queryText += ` ORDER BY ${orderByClause}`;
+
   try {
-    const result = await db.query(queryText);
+    const result = await db.query(queryText, params);
     res.json(result.rows);
   } catch (err) {
     console.error(err);
@@ -126,6 +166,8 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   }
 });
 
+
+// Edit an ad
 router.put("/:id", authMiddleware, async(req, res) => {
   const { id } = req.params;
   const loggedUserId = req.user.userId;
