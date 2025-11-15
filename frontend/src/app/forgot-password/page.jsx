@@ -34,7 +34,7 @@ const ForgotPasswordPage = () => {
     <div className={styles.forgotPassContainer}>
       <h2>Ați uitat parola?</h2>
       <p className={styles.subtitle}>
-        Nicio problemă. Introduceți adresa de email asociată contului și îți vom
+        Nicio problemă. Introduceți adresa de email asociată contului și vă vom
         trimite un link pentru a o reseta.
       </p>
 

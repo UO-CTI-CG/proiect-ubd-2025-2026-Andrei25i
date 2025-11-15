@@ -123,6 +123,36 @@ router.post('/forgot-password', async (req, res) => {
         console.error("Eroare la forgot-password:", err);
         res.status(500).json({ error: "Eroare internă a serverului." });
     }
-})
+});
+
+router.post("/reset-password", async (req, res) => {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+        return res.status(400).json({ error: "Token-ul și noua parolă sunt necesare." });
+    }
+
+    try {
+        const resetSecret = process.env.JWT_RESET_SECRET;
+        const payload = jwt.verify(token, resetSecret);
+        const { userId } = payload;
+        const salt = await bcryptjs.genSalt(10);
+        const passwordHash = await bcryptjs.hash(newPassword, salt);
+
+        await db.query(
+            `UPDATE users SET password_hash = $1 WHERE id = $2`,
+            [passwordHash, userId]
+        );
+
+        res.status(200).json({ message: "Parola a fost resetată cu succes." });
+    } catch (err) {
+        if (err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
+            return res.status(401).json({ error: "Link-ul de resetare este invalid sau a expirat." });
+        }
+        
+        console.error("Eroare la reset-password:", err);
+        res.status(500).json({ error: "Eroare internă a serverului" });
+    }
+});
 
 export default router;
