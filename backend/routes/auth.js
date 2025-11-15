@@ -1,7 +1,8 @@
 import express from "express";
 import db from "../db.js";
 import bcryptjs from "bcryptjs";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import { sendPasswordResetEmail } from "../utils/emailService.js";
 
 const router = express.Router();
 
@@ -95,5 +96,33 @@ router.post("/login", async (req, res) => {
         res.status(500).json({ error: "Eroare internă a serverului." });
     }
 });
+
+router.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const userResult = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        if (userResult.rows.length === 0) {
+            return res.status(200).json({ message: `Un link de resetare a parolei a fost trimis la adresa de email.`, email });
+        }
+
+        const user = userResult.rows[0];
+
+        const payload = { userId: user.id };
+        const resetSecret = process.env.JWT_RESET_SECRET;
+        const resetToken = jwt.sign(
+            payload,
+            resetSecret,
+            { expiresIn: '15m' }
+        );
+
+        await sendPasswordResetEmail(user, resetToken);
+        return res.status(200).json({ message: `Un link de resetare a parolei a fost trimis la adresa de email.`, email });    
+    } catch (err) {
+        console.error("Eroare la forgot-password:", err);
+        res.status(500).json({ error: "Eroare internă a serverului." });
+    }
+})
 
 export default router;

@@ -9,13 +9,14 @@ import ArrowIcon from "../components/icons/ArrowIcon";
 import EyeOff from "../components/icons/EyeOff";
 import Eye from "../components/icons/Eye";
 import styles from "./login.module.css";
-import NavBar from "../components/layout/NavBar";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const login = useAuthStore((state) => state.login);
   const router = useRouter();
@@ -27,6 +28,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     try {
       const response = await axios.post(
@@ -39,18 +41,14 @@ const LoginPage = () => {
       router.replace("/");
     } catch (err) {
       console.error("Eroare la login:", err);
-      if (err.response.data.error) {
-        setError(err.response.data.error);
-      } else {
-        setError("A apărut o eroare. Vă rugăm încercați din nou.");
-      }
+      toast.error(err.response?.data.error || "A apărut o eroare. Vă rugăm încercați din nou.", { duration: 10000 });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <>
-      <NavBar />
-
       <div className={styles.loginContainer}>
         <h2>Login</h2>
 
@@ -90,15 +88,15 @@ const LoginPage = () => {
                 )}
               </button>
             </div>
-            <Link href="/#" className={styles.forgotPassword}>
+            <Link href="/forgot-password" className={styles.forgotPassword}>
               Ați uitat parola?
             </Link>
           </div>
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button type="submit" className={styles.submitButton}>
-            Login
+          <button type="submit" className={styles.submitButton} disabled={isLoading}>
+            { isLoading ? "Login..." : "Login" }
           </button>
 
           <p className={styles.newAccount}>
