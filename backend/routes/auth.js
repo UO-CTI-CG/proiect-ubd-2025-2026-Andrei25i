@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
         const userResult = await db.query(queryText, [email.toLowerCase()]);
 
         if (userResult.rows.length === 0) {
-            return res.status(401).json({ error: "Email sau parolă incorectă" });
+            return res.status(401).json({ error: "Email sau parolă incorectă." });
         }
 
         const user = userResult.rows[0];
