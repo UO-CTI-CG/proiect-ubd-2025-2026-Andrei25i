@@ -4,7 +4,8 @@ import { useState } from "react";
 import styles from "./forgot-password.module.css";
 import Link from "next/link";
 import axios from "axios";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
+import FormInput from "../components/ui/FormInput";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -19,12 +20,15 @@ const ForgotPasswordPage = () => {
         `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
         { email }
       );
-      toast.success( response.data.message, { duration: 10000 });
+      toast.success(response.data.message, { duration: 10000 });
 
       setEmail("");
     } catch (err) {
       console.error("Eroare la solicitarea resetării parolei:", err);
-      toast.error("A apărut o eroare la trimiterea cererii. Vă rugăm încercați mai târziu.", { duration: 10000 });
+      toast.error(
+        "A apărut o eroare la trimiterea cererii. Vă rugăm încercați mai târziu.",
+        { duration: 10000 }
+      );
     } finally {
       setIsLoading(false);
     }
@@ -41,11 +45,11 @@ const ForgotPasswordPage = () => {
       <form onSubmit={handleSubmit} className={styles.forgotPassForm}>
         <div className={styles.formField}>
           <label htmlFor="email">Adresa de email</label>
-          <input
-            type="email"
-            id="email"
+          <FormInput
+            type={"email"}
+            id={"email"}
+            placeholder={"Introduceți adresa de email"}
             value={email}
-            placeholder="Introduceți adresa de email"
             onChange={(e) => setEmail(e.target.value)}
             required
           />

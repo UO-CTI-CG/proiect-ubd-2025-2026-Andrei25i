@@ -4,23 +4,18 @@ import { useState } from "react";
 import styles from "./ResetPassword.module.css";
 import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
-import Eye from "../components/icons/Eye";
-import EyeOff from "../components/icons/EyeOff";
 import axios from "axios";
+import FormInput from "../components/ui/FormInput";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,63 +55,48 @@ const ResetPasswordPage = () => {
           "A apărut o eroare. Vă rugăm încercați din nou.",
         { duration: 10000 }
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div className={styles.resetPasswordContainer}>
-        <h2>Setați o parolă nouă</h2>
+      <h2>Setați o parolă nouă</h2>
 
-        <form onSubmit={handleSubmit} className={styles.resetPasswordForm}>
+      <form onSubmit={handleSubmit} className={styles.resetPasswordForm}>
         <div className={styles.formField}>
-            <label htmlFor="password">Parola nouă</label>
-            <div className={styles.passwordContainer}>
-            <input
-                type={`${showPassword ? "text" : "password"}`}
-                id="password"
-                value={password}
-                placeholder="Introduceți o parolă nouă"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-            />
-            <button
-                type="button"
-                className={styles.showPassword}
-                onClick={togglePasswordVisibility}
-            >
-                {showPassword ? (
-                <EyeOff size={20} className={styles.eyeIcon} />
-                ) : (
-                <Eye size={20} className={styles.eyeIcon} />
-                )}
-            </button>
-            </div>
+          <label htmlFor="password">Parola nouă</label>
+          <FormInput
+            type={"password"}
+            id={"password"}
+            placeholder={"Introduceți parola"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
 
         <div className={styles.formField}>
-            <label htmlFor="password">Confirmă parola</label>
-            <input
-            type={`${showPassword ? "text" : "password"}`}
-            id="password"
+          <label htmlFor="password">Confirmați parola</label>
+          <FormInput
+            type={"password"}
+            id={"password"}
+            placeholder={"Introduceți din nou parola"}
             value={confirmPassword}
-            placeholder="Introduceți din nou parola"
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            />
+          />
         </div>
 
         {error && <p className={styles.error}>{error}</p>}
 
         <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={isLoading}
+          type="submit"
+          className={styles.submitButton}
+          disabled={isLoading}
         >
-            {"Resetați parola"}
+          {"Resetați parola"}
         </button>
-        </form>
+      </form>
     </div>
   );
 };
