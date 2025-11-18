@@ -27,7 +27,7 @@ const ResetPasswordPage = () => {
     }
 
     if (password !== confirmPassword) {
-      setError("Parolele nu se potrivesc.");
+      setError("Parolele nu coincid.");
       return;
     }
 

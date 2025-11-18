@@ -26,7 +26,7 @@
 }
 
 .formField label {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -62,6 +62,7 @@
   font-size: 14px;
   font-weight: 500;
   text-align: center;
+  margin-bottom: 80px;
 }
 
 .createLink {
@@ -77,3 +78,26 @@
 .createLink:hover {
   text-decoration: underline;
 }
+
+.Obs {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nameGroup {
+  display: flex;
+  gap: 40px;
+}
+
+@media (max-width: 600px) {
+  .nameGroup {
+    flex-direction: column;
+    gap: 15px;
+  }
+} 
