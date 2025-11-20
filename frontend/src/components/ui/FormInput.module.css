@@ -10,7 +10,8 @@
 
 .showPassword {
   position: absolute;
-  right: 10;
+  right: 0;
+  margin-right: 10px;
   display: flex;
   justify-content: center;
   align-items: center ;
@@ -22,7 +23,7 @@
 }
 
 .eyeIcon {
-  color: gray;;
+  color: gray;
 }
 
 .formInput {

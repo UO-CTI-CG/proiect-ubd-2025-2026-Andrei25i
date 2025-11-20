@@ -1,14 +1,12 @@
-"use client";
-
 import { useState } from "react";
-import Link from "next/link";
-import ArrowIcon from "../components/icons/ArrowIcon";
-import FormInput from "../components/ui/FormInput";
-import styles from "../login/login.module.css";
-import LocationSelector from "../components/ui/LocationSelector";
-import { useRouter } from "next/navigation";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
+
+import FormInput from "../../components/ui/FormInput";
+import LocationSelector from "../../components/ui/LocationSelector";
+import ArrowIcon from "../../components/icons/ArrowIcon";
+import styles from "./Login.module.css";
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,7 +20,7 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handlePhoneChange = (e) => {
     const val = e.target.value;
@@ -59,7 +57,7 @@ const RegisterPage = () => {
     try {
       const locationString = `${city}, ${county}`;
 
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
         first_name: firstName,
         last_name: lastName,
         email: email,
@@ -71,7 +69,7 @@ const RegisterPage = () => {
       toast.success("Cont creat cu succes.");
 
       setTimeout(() => {
-        router.push("/login");
+        navigate("/login");
       }, 2000);
     } catch (err) {
       console.error("Eroare la înregistrare:", err);
@@ -190,7 +188,7 @@ const RegisterPage = () => {
 
         <p className={styles.newAccount}>
           Aveți deja un cont?{" "}
-          <Link href="/login" className={styles.createLink}>
+          <Link to="/login" className={styles.createLink}>
             Login
             <ArrowIcon size={20} />
           </Link>

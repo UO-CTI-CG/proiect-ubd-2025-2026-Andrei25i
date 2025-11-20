@@ -1,11 +1,10 @@
-"use client";
-
 import { useState } from "react";
-import styles from "./ResetPassword.module.css";
-import { useSearchParams, useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import FormInput from "../components/ui/FormInput";
+import toast from "react-hot-toast";
+
+import FormInput from "../../components/ui/FormInput";
+import styles from "./ResetPassword.module.css";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState("");
@@ -13,8 +12,9 @@ const ResetPasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const navigate = useNavigate();
+
+  const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
 
   const handleSubmit = async (e) => {
@@ -40,13 +40,13 @@ const ResetPasswordPage = () => {
 
     try {
       await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+        `${import.meta.env.VITE_API_URL}/auth/reset-password`,
         { token: token, newPassword: password }
       );
 
       toast.success("Parola a fost resetată cu succes.");
       setTimeout(() => {
-        router.replace("/login");
+        navigate("/login", { replace: true });
       }, 3000);
     } catch (err) {
       console.error("Eroare la resetarea parolei:", err);

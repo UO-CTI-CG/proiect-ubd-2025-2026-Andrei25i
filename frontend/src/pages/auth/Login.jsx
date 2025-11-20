@@ -1,14 +1,13 @@
-"use client";
-
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import useAuthStore from "@/store/authStore";
-import Link from "next/link";
+import { useNavigate, Link} from "react-router-dom";
 import axios from "axios";
-import ArrowIcon from "../components/icons/ArrowIcon";
-import styles from "./login.module.css";
 import toast from "react-hot-toast";
-import FormInput from "../components/ui/FormInput";
+import useAuthStore from "../../store/authStore";
+
+import FormInput from "../../components/ui/FormInput";
+import ArrowIcon from "../../components/icons/ArrowIcon";
+import styles from "./Login.module.css";
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +15,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const login = useAuthStore((state) => state.login);
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,13 +23,14 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+        `${import.meta.env.VITE_API_URL}/auth/login`,
         { email, password }
       );
 
       const { token, user } = response.data;
       login(user, token);
-      router.replace("/");
+      navigate("/", {replace: true});
+
     } catch (err) {
       console.error("Eroare la login:", err);
       toast.error(
@@ -71,7 +71,7 @@ const LoginPage = () => {
             required
           />
 
-          <Link href="/forgot-password" className={styles.forgotPassword}>
+          <Link to="/forgot-password" className={styles.forgotPassword}>
             Ați uitat parola?
           </Link>
         </div>
@@ -86,7 +86,7 @@ const LoginPage = () => {
 
         <p className={styles.newAccount}>
           Nu aveți un cont?{" "}
-          <Link href="/register" className={styles.createLink}>
+          <Link to="/register" className={styles.createLink}>
             Creați unul
             <ArrowIcon size={20} />
           </Link>

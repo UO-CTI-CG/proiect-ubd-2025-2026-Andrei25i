@@ -1,13 +1,11 @@
-import Image from "next/image";
-import Link from "next/link";
-
+import { Link } from "react-router-dom";
 import styles from "./NavBar.module.css";
 
 const NavBar = () => {
   return (
     <nav className={styles.navBar}>
-      <Link href="/">
-        <Image
+      <Link to="/">
+        <img
           className={styles.logo}
           src={"/logo.png"}
           alt="Logo"

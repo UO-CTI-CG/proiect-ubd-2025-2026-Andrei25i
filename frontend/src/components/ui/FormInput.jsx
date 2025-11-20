@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import EyeOff from "../icons/EyeOff";
 import Eye from "../icons/Eye";
@@ -16,7 +14,6 @@ const FormInput = ({ type, id, ...rest }) => {
           className={styles.formInput}
           type={`${showPassword ? "text" : "password"}`}
           id={id}
-          onChange={(e) => setPassword(e.target.value)}
           {...rest}
         />
         <button

@@ -1,11 +1,9 @@
-"use client";
-
-import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const PageNavigationHandler = () => {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     toast.dismiss();

@@ -1,11 +1,8 @@
-"use client";
-
 import { useState, useEffect } from 'react';
+import locationsData from '../../data/romanian_locations.json';
 import styles from './LocationSelector.module.css';
-import locationsData from '@/data/romanian_locations.json';
 
 const LocationSelector = ({ selectedCounty, selectedCity, onCountyChange, onCityChange }) => {
-  
   const [availableCities, setAvailableCities] = useState([]);
 
   useEffect(() => {

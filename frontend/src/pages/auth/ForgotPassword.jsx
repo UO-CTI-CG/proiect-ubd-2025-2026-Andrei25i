@@ -1,11 +1,9 @@
-"use client";
-
 import { useState } from "react";
-import styles from "./forgot-password.module.css";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import FormInput from "../components/ui/FormInput";
+import FormInput from "../../components/ui/FormInput";
+import styles from "./ForgotPassword.module.css";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -17,12 +15,12 @@ const ForgotPasswordPage = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
+        `${import.meta.env.VITE_API_URL}/auth/forgot-password`,
         { email }
       );
       toast.success(response.data.message, { duration: 10000 });
-
       setEmail("");
+
     } catch (err) {
       console.error("Eroare la solicitarea resetării parolei:", err);
       toast.error(
@@ -64,7 +62,7 @@ const ForgotPasswordPage = () => {
         </button>
 
         <div className={styles.backToLogin}>
-          <Link href="/login">Înapoi la pagina de login</Link>
+          <Link to="/login">Înapoi la pagina de login</Link>
         </div>
       </form>
     </div>
