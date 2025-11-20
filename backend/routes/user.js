@@ -11,9 +11,9 @@ router.get("/:id", async (req, res) => {
 
   try {
     const userQuery = `
-        SELECT id, first_name, last_name, email, phone_number, city, created_at 
-        FROM users
-        WHERE id = $1;
+      SELECT id, first_name, last_name, email, phone_number, city, created_at 
+      FROM users
+      WHERE id = $1;
     `;
 
     const userResult = await db.query(userQuery, [id]);
@@ -21,16 +21,16 @@ router.get("/:id", async (req, res) => {
     if (userResult.rows.length === 0) {
       return res
         .status(404)
-        .json({ error: "Utilizatorul nu a fost găsit sau nu există" });
+        .json({ error: "Utilizatorul nu a fost găsit sau nu există." });
     }
 
     const user = userResult.rows[0];
 
     const adsQuery = `
-        SELECT id, title, price, image_url, created_at
-        FROM ads
-        WHERE user_id = $1
-        ORDER BY created_at DESC;
+      SELECT id, title, price, image_url, created_at, city
+      FROM ads
+      WHERE user_id = $1
+      ORDER BY created_at DESC;
     `;
 
     const adsResult = await db.query(adsQuery, [id]);
@@ -82,8 +82,8 @@ router.delete("/", authMiddleware, async (req, res) => {
       .status(200)
       .json({ message: "Contul dumneavoastră a fost șters cu succes." });
   } catch (err) {
-    console.error("Eroare la ștergerea contului", err);
-    res.status(500).json({ error: "Eroare internă a serverului" });
+    console.error("Eroare la ștergerea contului:", err);
+    res.status(500).json({ error: "Eroare internă a serverului." });
   }
 });
 
@@ -118,7 +118,7 @@ router.put("/", authMiddleware, async (req, res) => {
       ]);
 
       if (emailCheckResult.rows.length > 0) {
-        return res.status(409).json({ error: "Acest email nu este valabil." });
+        return res.status(409).json({ error: "Acest email este deja utilizat de un alt cont." });
       }
     }
 

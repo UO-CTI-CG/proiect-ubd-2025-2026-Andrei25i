@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
     const category = categoryResult.rows[0];
 
     const adsQuery = `
-            SELECT id, title, price, image_url, created_at
+            SELECT id, title, price, image_url, city, created_at 
             FROM ads
             WHERE category_id = $1
             ORDER BY created_at DESC;

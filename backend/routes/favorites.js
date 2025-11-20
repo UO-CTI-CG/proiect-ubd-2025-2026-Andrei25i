@@ -7,7 +7,7 @@ const router = express.Router();
 // GET all favorite ads
 router.get("/", authMiddleware, async (req, res) => {
   const loggedUserId = req.user.userId;
-  const { search, category, minPrice, maxPrice, sort } = req.query;
+  const { search, category, minPrice, maxPrice, sort, city } = req.query;
 
   let queryText = `
         SELECT
@@ -15,9 +15,14 @@ router.get("/", authMiddleware, async (req, res) => {
             ads.title,
             ads.price,
             ads.image_url,
-            ads.created_at AS ad_created_at,
-            users.city AS ad_city,
-            categories.name AS category_name,
+            ads.created_at AS created_at,
+            ads.city,
+
+            json_build_object(
+              'id', categories.id,
+              'name', categories.name
+            ) AS category,
+
             favorites.created_at AS favorited_at
         FROM 
             favorites
@@ -55,6 +60,11 @@ router.get("/", authMiddleware, async (req, res) => {
     conditions.push(`ads.price <= $${params.length}`);
   }
 
+  if (city) {
+    params.push(city);
+    conditions.push(`ads.city ILIKE '%' || $${params.length} || '%'`);
+  }
+
   queryText += ` WHERE ${conditions.join(" AND ")}`;
 
   const sortOptions = {
@@ -68,7 +78,7 @@ router.get("/", authMiddleware, async (req, res) => {
     favorited_date_asc: "favorites.created_at ASC",
   };
 
-  let orderByClause = sortOptions[sort] || sortOptions['favorited_date_desc'];
+  let orderByClause = sortOptions[sort] || sortOptions["favorited_date_desc"];
   queryText += ` ORDER BY ${orderByClause}`;
 
   try {
@@ -86,9 +96,9 @@ router.post("/:adId", authMiddleware, async (req, res) => {
   const loggedUserId = req.user.userId;
 
   const queryText = `
-        INSERT INTO favorites (user_id, ad_id)
-        VALUES ($1, $2)
-        RETURNING *;
+      INSERT INTO favorites (user_id, ad_id)
+      VALUES ($1, $2)
+      RETURNING *;
     `;
 
   try {
@@ -100,7 +110,7 @@ router.post("/:adId", authMiddleware, async (req, res) => {
     });
   } catch (err) {
     console.error("Eroare la adaugare la favorite:", err);
-    res.status(500).json({ error: "Eroare internă a serverului" });
+    res.status(500).json({ error: "Eroare internă a serverului." });
   }
 });
 
@@ -130,7 +140,7 @@ router.delete("/:adId", authMiddleware, async (req, res) => {
     });
   } catch (err) {
     console.error("Eroare la ștergerea de la favorite:", err);
-    res.status(500).json({ error: "Eroare internă a serverului" });
+    res.status(500).json({ error: "Eroare internă a serverului." });
   }
 });
 
