@@ -1,13 +1,12 @@
-import { useState } from "react";
-import { useNavigate, Link} from "react-router-dom";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
+import api from "../../services/api";
 import toast from "react-hot-toast";
 import useAuthStore from "../../store/authStore";
 
 import FormInput from "../../components/ui/FormInput";
 import ArrowIcon from "../../components/icons/ArrowIcon";
 import styles from "./Login.module.css";
-
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -16,21 +15,31 @@ const LoginPage = () => {
 
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const isExpired = searchParams.get("expired");
+    if (isExpired) {
+      toast.error("Sesiunea a expirat. Te rugăm să te autentifici din nou.", {
+        duration: 5000,
+      });
+      navigate('/login', { replace: true });
+    }
+  }, [navigate, searchParams]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `${import.meta.env.VITE_API_URL}/auth/login`,
         { email, password }
       );
 
       const { token, user } = response.data;
       login(user, token);
-      navigate("/", {replace: true});
-
+      navigate("/", { replace: true });
     } catch (err) {
       console.error("Eroare la login:", err);
       toast.error(

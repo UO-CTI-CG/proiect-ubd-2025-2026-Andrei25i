@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import axios from "axios";
+import api from "../../services/api";
 import toast from "react-hot-toast";
 
 import FormInput from "../../components/ui/FormInput";
@@ -39,7 +39,7 @@ const ResetPasswordPage = () => {
     setIsLoading(true);
 
     try {
-      await axios.post(
+      await api.post(
         `${import.meta.env.VITE_API_URL}/auth/reset-password`,
         { token: token, newPassword: password }
       );

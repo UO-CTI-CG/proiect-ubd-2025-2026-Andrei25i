@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../services/api";
 import toast from "react-hot-toast";
 
 import FormInput from "../../components/ui/FormInput";
@@ -57,7 +57,7 @@ const RegisterPage = () => {
     try {
       const locationString = `${city}, ${county}`;
 
-      await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
+      await api.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
         first_name: firstName,
         last_name: lastName,
         email: email,

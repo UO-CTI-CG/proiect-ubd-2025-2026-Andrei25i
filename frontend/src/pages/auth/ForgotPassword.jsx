@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import api from "../../services/api";
 import { toast } from "react-hot-toast";
 import FormInput from "../../components/ui/FormInput";
 import styles from "./ForgotPassword.module.css";
@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
+      const response = await api.post(
         `${import.meta.env.VITE_API_URL}/auth/forgot-password`,
         { email }
       );
