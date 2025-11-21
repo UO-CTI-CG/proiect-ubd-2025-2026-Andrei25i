@@ -1,0 +1,195 @@
+.navbar {
+  background-color: #1b1b1b;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 3%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  z-index: 10;
+}
+
+.navbar.full {
+  justify-content: space-between;
+}
+
+.left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 33%;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 34%;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 33%;
+}
+
+.logo img {
+  width: 60px;
+  height: 60px;
+}
+
+.authButtons {
+  display: flex;
+  gap: 15px;
+}
+
+.authButtons a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  padding: 0 15px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.loginButton {
+  height: 45px;
+  background-color: #4376fb;
+  border-radius: 7px;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+.signupButton:hover {
+  color: #666;
+}
+
+.userActions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.userAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.userAvatar div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 7px;
+  font-weight: 700;
+  background-color: white;
+  text-decoration: none;
+  color: black;
+}
+
+.favorites {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.favorites:hover {
+  color: #da3939;
+}
+
+.newAdButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: white;
+  width: fit-content;
+  height: 45px;
+  padding: 0 10px;
+  background-color: #4376fb;
+  border-radius: 7px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.newAdButton:hover {
+  background-color: #0056b3;
+}
+
+.newAdButton img {
+  width: 13px;
+  height: 13px;
+}
+
+@media only screen and (max-width: 700px) {
+  .favorites p,
+  .userAvatar p {
+    display: none;
+  }
+
+  .userActions {
+    gap: 25px;
+  }
+}
+
+@media only screen and (max-width: 620px) {
+  .navbar {
+    justify-content: center;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .authButtons .signupButton {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .newAdButton p {
+    display: none;
+  }
+
+  .newAdButton img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .newAdButton {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .navbar {
+    padding: 0 5%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .favorites {
+    display: none;
+  }
+}

@@ -9,7 +9,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  padding-top: 80px;
+  padding-top: 90px;
 }
 
 main {
@@ -27,7 +27,7 @@ main {
 
 .notFoundContainer h1 {
   font-size: 128px;
-  color: #4376fb;
+  color: #4376FB;
 }
 
 .notFoundContainer h2 {
@@ -48,7 +48,7 @@ main {
 .homeButton {
   display: inline-block;
   padding: 12px 25px;
-  background-color: #007bff;
+  background-color: #4376FB;
   color: white;
   text-decoration: none;
   border-radius: 5px;

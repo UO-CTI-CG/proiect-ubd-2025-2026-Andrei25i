@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import styles from "./NavBar.module.css";
+import styles from "./Navbar.module.css";
 
-const NavBar = () => {
+const NavbarSimple = () => {
   return (
-    <nav className={styles.navBar}>
-      <Link to="/">
+    <nav className={styles.navbar}>
+      <Link to="/" className={styles.logo}>
         <img
-          className={styles.logo}
           src={"/logo.png"}
           alt="Logo"
           width={100}
@@ -17,4 +16,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavbarSimple;
