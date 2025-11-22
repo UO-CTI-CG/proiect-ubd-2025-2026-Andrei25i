@@ -5,9 +5,19 @@ const router = express.Router();
 
 // GET all categories
 router.get("/", async (req, res) => {
+  const { sort } = req.query;
+  const sortOptions = {
+    name_asc: "name ASC",
+    name_desc: "name DESC",
+    id_asc: "id ASC",
+    id_desc: "id DESC",
+  };
+
+  const orderByClause = sortOptions[sort] || "id ASC";
+
   const queryText = `
-        SELECT * from categories
-        ORDER BY name;
+      SELECT * FROM categories
+      ORDER BY ${orderByClause};
     `;
 
   try {
@@ -45,8 +55,8 @@ router.get("/:id", async (req, res) => {
     const adsResult = await db.query(adsQuery, [id]);
 
     const response = {
-        ...category,
-        ads: adsResult.rows
+      ...category,
+      ads: adsResult.rows,
     };
 
     res.json(response);
