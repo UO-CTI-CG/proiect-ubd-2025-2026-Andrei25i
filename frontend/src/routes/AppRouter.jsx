@@ -6,12 +6,15 @@ import Register from '../pages/auth/Register';
 import ForgotPassword from '../pages/auth/ForgotPassword';
 import ResetPassword from '../pages/auth/ResetPassword';
 import NotFound from '../pages/not-found/NotFound';
+import Categories from '../pages/categories/Categories';
 
 const AppRouter = () => {
   return (
     <Routes>
       {/* Home */}
       <Route path="/" element={<Home />} />
+
+      <Route path='/categories' element={<Categories />} />
       
       {/* Auth */}
       <Route path="/login" element={<Login />} />

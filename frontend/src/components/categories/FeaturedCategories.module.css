@@ -5,7 +5,7 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  height: 180px;
+  height: 181px;
 }
 
 .featured {
@@ -24,6 +24,11 @@
   width: 120px;
   flex-shrink: 0;
   gap: 15px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3%);
 }
 
 .card:first-child {
@@ -42,11 +47,18 @@
   height: 75px;
   background-color: #e8e8e8;
   border-radius: 100%;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.card:hover .icon {
+  background-color: #c8c8c8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .icon img {
-  width: 45px;
-  height: 45px;
+  width: 65%;
+  height: 65%;
 }
 
 .name {
@@ -66,6 +78,10 @@
   text-overflow: ellipsis;
   white-space: normal;
   overflow-wrap: anywhere;
+}
+
+.card:hover .name {
+  color: #4376fb;
 }
 
 .message {

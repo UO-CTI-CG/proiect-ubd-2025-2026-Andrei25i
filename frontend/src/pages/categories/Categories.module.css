@@ -1,0 +1,92 @@
+.categoriesContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 160px);
+  row-gap: 70px;
+  column-gap: 90px;
+  justify-content: center;
+  margin: 70px 0;
+}
+
+.categoryCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  text-decoration: none;
+  color: black;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.categoryCard:hover {
+  transform: translateY(-3%);
+}
+
+.categoryCardImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 160px;
+  height: 160px;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.categoryCard:hover .categoryCardImage {
+  background-color: #c8c8c8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.categoryCardImage img {
+  width: 65%;
+  height: 65%;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.categoryCard:hover .categoryCardImage img {
+  transform: scale(1.08);
+}
+
+.categoryCard h2 {
+  font-size: clamp(13px, 2vw, 16px);
+  font-weight: 500;
+  text-align: center;
+}
+
+.categoryCard:hover h2 {
+  color: #4376fb;
+}
+
+@media only screen and (max-width: 1050px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(3, 200px);
+  }
+
+  .categoriesContainer {
+    column-gap: 50px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(3, 130px);
+  }
+
+  .categoryCardImage {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+@media only screen and (max-width: 560px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(2, 130px);
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .categoriesContainer {
+    grid-template-columns: repeat(1, 130px);
+  }
+}

@@ -4,7 +4,6 @@ import useAuthStore from "../../../store/authStore";
 import UserActions from "./UserActions";
 import AuthButtons from "./AuthButtons";
 import AddButton from "./AddButton";
-import logo from "../../../assets/logo.png";
 
 const NavbarFull = () => {
   const user = useAuthStore((state) => state.user);
@@ -17,7 +16,7 @@ const NavbarFull = () => {
 
       <div className={styles.center}>
         <Link to="/" className={styles.logo}>
-          <img src={logo} alt="Logo" width={100} height={100} />
+          <img src={"/logo.png"} alt="Logo" width={100} height={100} />
         </Link>
       </div>
 
