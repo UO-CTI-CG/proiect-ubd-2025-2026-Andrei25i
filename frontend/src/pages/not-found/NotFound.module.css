@@ -1,0 +1,70 @@
+.notFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 20px;
+}
+
+.notFoundContainer .backButton {
+  background-color: #1b1b1b;
+  align-self: flex-start;
+  margin-left: 4%;
+  margin-bottom: 2%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 850px) {
+  .notFoundContainer .backButton {
+    margin-bottom: 5%;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .notFoundContainer .backButton {
+    margin-bottom: 8%;
+  }
+}
+
+.notFoundContainer h1 {
+  font-size: 110px;
+  color: #4376FB;
+}
+
+.notFoundContainer h2 {
+  font-size: 30px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: black;
+}
+
+.notFoundContainer p {
+  font-size: 15px;
+  font-weight: 400;
+  max-width: 400px;
+  margin-bottom: 30px;
+  color: #666;
+}
+
+.homeButton {
+  display: inline-block;
+  padding: 12px 25px;
+  background-color: #4376FB;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.homeButton:hover {
+  background-color: #0056b3;
+}

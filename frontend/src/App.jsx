@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import PageNavigationHandler from './components/layout/PageNavigationHandler';
 import AppRouter from './routes/AppRouter';
 import Navbar from './components/layout/navbar';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function App() {
   return (

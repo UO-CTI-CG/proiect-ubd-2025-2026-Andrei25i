@@ -10,52 +10,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   
   padding-top: 90px;
+  background-color: #F7F7F7;
 }
 
 main {
-  margin-top: 50px;
-}
-
-.notFoundContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.notFoundContainer h1 {
-  font-size: 128px;
-  color: #4376FB;
-}
-
-.notFoundContainer h2 {
-  font-size: 40px;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  color: black;
-}
-
-.notFoundContainer p {
-  font-size: 17px;
-  font-weight: 400;
-  max-width: 400px;
-  margin-bottom: 30px;
-  color: #666;
-}
-
-.homeButton {
-  display: inline-block;
-  padding: 12px 25px;
-  background-color: #4376FB;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.homeButton:hover {
-  background-color: #0056b3;
+  margin-top: 30px;
 }
