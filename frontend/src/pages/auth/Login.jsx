@@ -23,7 +23,7 @@ const LoginPage = () => {
       toast.error("Sesiunea a expirat. Te rugăm să te autentifici din nou.", {
         duration: 5000,
       });
-      navigate('/login', { replace: true });
+      navigate("/login", { replace: true });
     }
   }, [navigate, searchParams]);
 
@@ -43,7 +43,8 @@ const LoginPage = () => {
     } catch (err) {
       console.error("Eroare la login:", err);
       toast.error(
-        err.response?.data.error ||
+        err.response?.data?.error ||
+          err.response?.data?.message ||
           "A apărut o eroare. Vă rugăm încercați din nou.",
         { duration: 10000 }
       );

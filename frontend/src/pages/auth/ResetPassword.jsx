@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useAuthStore from "../../store/authStore";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../../services/api";
 import toast from "react-hot-toast";
@@ -12,6 +13,7 @@ const ResetPasswordPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -46,6 +48,7 @@ const ResetPasswordPage = () => {
 
       toast.success("Parola a fost resetată cu succes.");
       setTimeout(() => {
+        logout();
         navigate("/login", { replace: true });
       }, 3000);
     } catch (err) {
@@ -55,6 +58,8 @@ const ResetPasswordPage = () => {
           "A apărut o eroare. Vă rugăm încercați din nou.",
         { duration: 10000 }
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 

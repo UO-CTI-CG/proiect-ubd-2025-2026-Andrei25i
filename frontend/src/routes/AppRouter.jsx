@@ -14,6 +14,7 @@ const AppRouter = () => {
       {/* Home */}
       <Route path="/" element={<Home />} />
 
+      {/* Categories */}
       <Route path='/categories' element={<Categories />} />
       
       {/* Auth */}

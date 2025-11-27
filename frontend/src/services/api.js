@@ -8,11 +8,20 @@ const api = axios.create({
   },
 });
 
+const publicEndpoints = [
+    "/auth/login",
+    "/auth/register",
+    "/reset-password", 
+    "/forgot-password"
+];
+
 api.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
 
-    if (token) {
+    const isPublicRequest = publicEndpoints.some(endpoint => config.url.includes(endpoint));
+
+    if (token && !isPublicRequest) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
@@ -30,13 +39,14 @@ api.interceptors.response.use(
 
   async (error) => {
     const originalRequest = error.config;
-    const isLoginRequest = originalRequest.url.includes("/auth/login");
     const status = error.response?.status;
+
+    const isPublicRequest = originalRequest && publicEndpoints.some(endpoint => originalRequest.url.includes(endpoint));
 
     if (
       (status === 401 || status === 403) &&
       !originalRequest._retry &&
-      !isLoginRequest
+      !isPublicRequest
     ) {
       originalRequest._retry = true;
       useAuthStore.getState().logout();

@@ -13,7 +13,7 @@ const NotFoundPage = () => {
 
       <h1>404</h1>
       <h2>Pagina nu a fost găsită</h2>
-      <p>Ne pare rău, dar pagina pe care o cauți nu există sau a fost mutată.</p>
+      <p>Ne pare rău, dar pagina pe care o cautați nu există.</p>
       <Link to="/" className={styles.homeButton}>
         Înapoi la pagina principală
       </Link>

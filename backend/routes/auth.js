@@ -136,22 +136,26 @@ router.post("/reset-password", async (req, res) => {
         const resetSecret = process.env.JWT_RESET_SECRET;
         const payload = jwt.verify(token, resetSecret);
         const { userId } = payload;
+
+        if (!userId) {
+            return res.status(400).json({ error: "Token-ul este invalid." });
+        }
+
         const salt = await bcryptjs.genSalt(10);
         const passwordHash = await bcryptjs.hash(newPassword, salt);
 
-        await db.query(
+        const updateResult = await db.query(
             `UPDATE users SET password_hash = $1 WHERE id = $2`,
             [passwordHash, userId]
         );
 
+        if (updateResult.rowCount === 0) {
+            return res.status(404).json({ error: "Utilizatorul nu a fost găsit." });
+        }
+
         res.status(200).json({ message: "Parola a fost resetată cu succes." });
     } catch (err) {
-        if (err.name === 'TokenExpiredError' || err.name === 'JsonWebTokenError') {
-            return res.status(401).json({ error: "Link-ul de resetare este invalid sau a expirat." });
-        }
-        
-        console.error("Eroare la reset-password:", err);
-        res.status(500).json({ error: "Eroare internă a serverului" });
+        return res.status(401).json({ error: "Link-ul de resetare este invalid sau a expirat." });
     }
 });
 
