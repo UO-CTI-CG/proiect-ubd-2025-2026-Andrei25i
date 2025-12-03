@@ -8,9 +8,7 @@ const useCategories = ({ count = null, sort = "id_asc" }) => {
 
   const fetchCategories = async () => {
     try {
-      const response = await api.get(
-        `${import.meta.env.VITE_API_URL}/categories?sort=${sort}`
-      );
+      const response = await api.get(`categories?sort=${sort}`);
       setAllCategories(response.data);
     } catch (err) {
       if (!err.response) {
