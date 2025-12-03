@@ -172,7 +172,7 @@ const RegisterPage = () => {
           />
         </div>
 
-        <div className={styles.Obs}>
+        <div className={styles.obs}>
           <p>* Câmp obligatoriu</p>
         </div>
 

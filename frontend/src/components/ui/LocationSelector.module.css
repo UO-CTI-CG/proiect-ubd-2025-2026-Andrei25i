@@ -19,21 +19,27 @@
 .select {
   padding: 15px;
   background-color: white;
-  outline-color: gray;
-  border: solid 1px #dfdfdf;
+  outline: none;
+  border: solid 1px #ddd;
   border-radius: 7px;
   font-size: 15px;
   width: 100%;
   cursor: pointer;
   color: #9ea7ba;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.select:focus {
+  border-color: #4376fb;
+  box-shadow: 0 0 0 3px #0056b31a;
 }
 
 .hasValue {
-  color: #000;
+  color: #333;
 }
 
 .select option {
-  color: #000;
+  color: #333;
 }
 
 .select:disabled {
