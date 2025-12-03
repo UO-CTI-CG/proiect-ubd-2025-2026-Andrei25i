@@ -5,8 +5,8 @@
   align-items: center;
   background-color: #ffffff;
   border: solid #dfdfdf 1px;
-  height: 181px;
-  padding: 0 50px;
+  height: 150px;
+  padding: 0 30px;
 }
 
 .backButton {
@@ -29,7 +29,8 @@
   align-self: center;
   align-items: center;
   gap: 35px;
-  font-size: clamp(12px, 2vw, 16px);
+  color: #333;
+  font-size: clamp(10px, 2vw, 15px);
   font-weight: 700;
   text-align: center;
 }
@@ -38,15 +39,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   background-color: #e8e8e8;
   border-radius: 100%;
 }
 
 .icon img {
-  width: 65%;
-  height: 65%;
+  width: 50%;
+  height: 50%;
 }
 
 @media only screen and (max-width: 750px) {
