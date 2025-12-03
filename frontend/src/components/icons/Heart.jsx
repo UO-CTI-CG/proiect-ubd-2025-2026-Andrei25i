@@ -1,4 +1,4 @@
-export default function EyeOff({className, size = 30, props }) {
+export default function Heart({className, size = 30, props }) {
   return (
     <svg
       width={size}
