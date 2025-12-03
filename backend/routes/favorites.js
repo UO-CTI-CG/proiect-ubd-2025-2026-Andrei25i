@@ -14,7 +14,8 @@ router.get("/", authMiddleware, async (req, res) => {
             ads.id,
             ads.title,
             ads.price,
-            ads.image_url,
+            ads.currency,
+            ads.images,
             ads.created_at AS created_at,
             ads.city,
 

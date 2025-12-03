@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 
   let queryText = `
       SELECT 
-          ads.id, ads.title, ads.description, ads.price, ads.image_url, ads.created_at, ads.city,
+          ads.id, ads.title, ads.description, ads.price, ads.currency, ads.images, ads.created_at, ads.city,
           users.first_name AS user_first_name, users.last_name AS user_last_name,
           categories.name AS category_name
       FROM ads
@@ -77,7 +77,7 @@ router.get("/:id", async (req, res) => {
 
   const queryText = `
       SELECT 
-        ads.id, ads.title, ads.description, ads.price, ads.image_url, ads.created_at, ads.city,
+        ads.id, ads.title, ads.description, ads.price, ads.currency, ads.images, ads.created_at, ads.city,
 
         -- Category details
         json_build_object(
@@ -118,18 +118,18 @@ router.get("/:id", async (req, res) => {
 router.post("/", authMiddleware, async (req, res) => {
   const loggedUserId = req.user.userId;
 
-  const { title, description, price, image_url, category_id, city } = req.body;
+  const { title, description, price, currency, images, category_id, city } = req.body;
 
-  if (!title || !description || !price || !category_id || !city) {
+  if (!title || !description || !price || !images || images.length === 0 || !category_id || !city) {
     return res.status(400).json({
-      error: "Câmpurile titlu, descriere, preț, categorie și oraș sunt obligatorii.",
+      error: "Toate câmpurile și cel puțin o imagine sunt obligatorii.",
     });
   }
 
   try {
     const queryText = `
-      INSERT INTO ads (title, description, price, image_url, user_id, category_id, city)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO ads (title, description, price, currency, images, user_id, category_id, city)
+      VALUES ($1, $2, $3, $4, $5::jsonb, $6, $7, $8)
       RETURNING *;
     `;
 
@@ -137,7 +137,8 @@ router.post("/", authMiddleware, async (req, res) => {
       title,
       description,
       price,
-      image_url,
+      currency || 'RON',
+      JSON.stringify(images),
       loggedUserId,
       category_id,
       city,
@@ -190,9 +191,9 @@ router.put("/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
   const loggedUserId = req.user.userId;
 
-  const { title, description, price, image_url, category_id, city } = req.body;
+  const { title, description, price, currency, images, category_id, city } = req.body;
 
-  if (!title || !description || !price || !image_url || !category_id || !city) {
+  if (!title || !description || !price || !images || images.length === 0 || !category_id || !city) {
     return res.status(400).json({ error: "Toate câmpurile sunt obligatorii." });
   }
 
@@ -218,16 +219,17 @@ router.put("/:id", authMiddleware, async (req, res) => {
       SET 
         title = $1, 
         description = $2, 
-        price = $3, 
-        image_url = $4, 
-        category_id = $5,
-        city = $6
+        price = $3,
+        currency = $4, 
+        images = $5::jsonb, 
+        category_id = $6,
+        city = $7
       WHERE 
-        id = $7
+        id = $8
       RETURNING *;
     `;
 
-    const values = [title, description, price, image_url, category_id, city, id];
+    const values = [title, description, price, currency || 'RON', JSON.stringify(images), category_id, city, id];
     const result = await db.query(updateQuery, values);
     res.status(200).json(result.rows[0]);
   } catch (err) {

@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
     const user = userResult.rows[0];
 
     const adsQuery = `
-      SELECT id, title, price, image_url, created_at, city
+      SELECT id, title, price, currency, images, created_at, city
       FROM ads
       WHERE user_id = $1
       ORDER BY created_at DESC;
