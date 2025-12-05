@@ -48,7 +48,7 @@ const useFavoritesStore = create(
           if (isAlreadyFav) {
             await api.delete(`/favorites/${ad.id}`);
           } else {
-            await api.post("/favorites", { ad_id: ad.id });
+            await api.post(`/favorites/${ad.id}`);
           }
         } catch (error) {
           console.error("Eroare la server:", error);
