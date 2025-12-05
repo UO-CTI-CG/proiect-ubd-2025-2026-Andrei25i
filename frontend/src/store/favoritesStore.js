@@ -11,10 +11,19 @@ const useFavoritesStore = create(
       error: null,
       isLoaded: false,
 
-      fetchFavorites: async () => {
+      fetchFavorites: async (filters = {}) => {
         set({ isLoading: true, error: null });
         try {
-          const response = await api.get("/favorites");
+          const params = new URLSearchParams();
+
+          Object.keys(filters).forEach((key) => {
+            if (filters[key]) {
+              params.append(key, filters[key]);
+            }
+          });
+
+          const response = await api.get(`/favorites?${params.toString()}`);
+
           set({ favorites: response.data, isLoading: false, isLoaded: true });
         } catch (error) {
           console.error("Eroare la fetch favorites:", error);

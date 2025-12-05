@@ -4,9 +4,10 @@
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  border: solid #dfdfdf 1px;
   height: 150px;
   padding: 0 30px;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .backButton {

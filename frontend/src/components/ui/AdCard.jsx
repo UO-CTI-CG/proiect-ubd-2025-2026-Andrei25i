@@ -3,6 +3,7 @@ import getOptimizedImageUrl from "../../utils/getOptimizedImageUrl";
 import { useNavigate } from "react-router-dom";
 import useFavoritesStore from "../../store/favoritesStore";
 import formatPrice from "../../utils/formatPrice";
+import formatDate from "../../utils/formatDate";
 import HeartIcon from "../icons/HeartIcon";
 
 const AdCard = ({ ad }) => {
@@ -43,7 +44,7 @@ const AdCard = ({ ad }) => {
       <div className={styles.content}>
         <p className={styles.price}>{formatPrice(ad.price, ad.currency)}</p>
         <h3 className={styles.title}>{ad.title}</h3>
-        <p className={styles.city}>{ad.city}</p>
+        <p className={styles.city}>{ad.city} - {formatDate(ad.created_at) }</p>
       </div>
     </div>
   );
