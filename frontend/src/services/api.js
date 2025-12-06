@@ -9,17 +9,19 @@ const api = axios.create({
 });
 
 const publicEndpoints = [
-    "/auth/login",
-    "/auth/register",
-    "/reset-password", 
-    "/forgot-password"
+  "/auth/login",
+  "/auth/register",
+  "/reset-password",
+  "/forgot-password",
 ];
 
 api.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
 
-    const isPublicRequest = publicEndpoints.some(endpoint => config.url.includes(endpoint));
+    const isPublicRequest = publicEndpoints.some((endpoint) =>
+      config.url.includes(endpoint)
+    );
 
     if (token && !isPublicRequest) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -41,7 +43,11 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     const status = error.response?.status;
 
-    const isPublicRequest = originalRequest && publicEndpoints.some(endpoint => originalRequest.url.includes(endpoint));
+    const isPublicRequest =
+      originalRequest &&
+      publicEndpoints.some((endpoint) =>
+        originalRequest.url.includes(endpoint)
+      );
 
     if (
       (status === 401 || status === 403) &&
@@ -49,8 +55,17 @@ api.interceptors.response.use(
       !isPublicRequest
     ) {
       originalRequest._retry = true;
-      useAuthStore.getState().logout();
-      window.location.href = "/login?expired=true";
+
+      const token = useAuthStore.getState().token;
+      if (token) {
+        useAuthStore.getState().logout();
+        window.location.href = "/login?expired=true";
+      } else {
+        const currentPath = window.location.pathname;
+        window.location.href = `/login?redirect=${encodeURIComponent(
+          currentPath
+        )}`;
+      }
     }
 
     return Promise.reject(error);

@@ -19,11 +19,17 @@ const LoginPage = () => {
 
   useEffect(() => {
     const isExpired = searchParams.get("expired");
+    const redirectPath = searchParams.get("redirect");
+
     if (isExpired) {
       toast.error("Sesiunea a expirat. Te rugăm să te autentifici din nou.", {
         duration: 5000,
       });
       navigate("/login", { replace: true });
+    } else if (redirectPath) {
+      toast.error("Această acțiune necesită autentificare.", {
+        duration: 5000,
+      });
     }
   }, [navigate, searchParams]);
 
