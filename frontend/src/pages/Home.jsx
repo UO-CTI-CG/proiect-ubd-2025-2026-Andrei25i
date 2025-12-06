@@ -36,15 +36,23 @@ export default function Home() {
       />
 
       {loading ? (
-        <LoadingSpinner size={60} />
+        <div style={{ minHeight: "800px" }}>
+          <LoadingSpinner size={60} />
+        </div>
       ) : error ? (
-        <div style={{ textAlign: "center", marginTop: "40px", color: "#666" }}>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "40px",
+            color: "#666",
+            minHeight: "800px",
+          }}
+        >
           {error}
         </div>
       ) : (
         <PaginatedList
           items={ads}
-          itemsPerPage={20}
           renderItem={(item) => <AdCard key={item.id} ad={item} />}
         />
       )}

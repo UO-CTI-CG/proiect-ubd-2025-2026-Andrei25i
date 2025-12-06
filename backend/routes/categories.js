@@ -35,7 +35,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     const categoryQuery = `
-            SELECT * FROM categories
+            SELECT id, name FROM categories
             WHERE id = $1;
         `;
     const categoryResult = await db.query(categoryQuery, [id]);
@@ -45,21 +45,7 @@ router.get("/:id", async (req, res) => {
     }
 
     const category = categoryResult.rows[0];
-
-    const adsQuery = `
-            SELECT id, title, price, currency, images, city, created_at 
-            FROM ads
-            WHERE category_id = $1
-            ORDER BY created_at DESC;
-        `;
-    const adsResult = await db.query(adsQuery, [id]);
-
-    const response = {
-      ...category,
-      ads: adsResult.rows,
-    };
-
-    res.json(response);
+    res.json(category);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Eroare la preluarea categoriei" });

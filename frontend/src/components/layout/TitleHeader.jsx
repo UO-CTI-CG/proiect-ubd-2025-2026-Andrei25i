@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import BackIcon from "../icons/BackIcon";
 import styles from "./TitleHeader.module.css";
+import LoadingSpinner from "../ui/LoadingSpinner";
 
-const TitleHeader = ({ title, icon }) => {
+const TitleHeader = ({ loading, title, icon }) => {
   const navigate = useNavigate();
 
   const handleClick = () => navigate(-1);
@@ -14,13 +15,17 @@ const TitleHeader = ({ title, icon }) => {
       </div>
 
       <div className={styles.title}>
-        {icon && (
-          <div className={styles.icon}>
-            <img src={icon} alt={`${title} icon`} />
-          </div>
-        )}
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <div className={styles.icon}>
+              <img src={icon} alt={`${title} icon`} />
+            </div>
 
-        <h1>{title}</h1>
+            <h1>{title}</h1>
+          </>
+        )}
       </div>
     </section>
   );

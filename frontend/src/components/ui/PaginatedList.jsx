@@ -4,7 +4,7 @@ import prevIcon from "../../assets/prev.svg";
 import nextIcon from "../../assets/next.svg";
 import styles from "./PaginatedList.module.css";
 
-const PaginatedList = ({ items, itemsPerPage = 6, renderItem }) => {
+const PaginatedList = ({ items, itemsPerPage = 20, renderItem }) => {
   const [itemOffset, setItemOffset] = useState(0);
 
   const endOffset = itemOffset + itemsPerPage;

@@ -8,6 +8,7 @@ import ResetPassword from '../pages/auth/ResetPassword';
 import NotFound from '../pages/not-found/NotFound';
 import Categories from '../pages/categories/Categories';
 import Favorites from '../pages/favorites/Favorites';
+import CategoryPage from '../pages/categories/CategoryPage';
 
 const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ const AppRouter = () => {
 
       {/* Categories */}
       <Route path='/categories' element={<Categories />} />
+      <Route path='/categories/:id' element={<CategoryPage />} />
 
       {/* Favorites */}
       <Route path='/favorites' element={<Favorites />}/>

@@ -39,16 +39,24 @@ const Favorites = () => {
       />
 
       {isLoading ? (
-        <LoadingSpinner size={60} />
+        <div style={{ minHeight: "800px" }}>
+          <LoadingSpinner size={60} />
+        </div>
       ) : error ? (
-        <div style={{ textAlign: "center", marginTop: "40px", color: "#666" }}>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "40px",
+            color: "#666",
+            minHeight: "800px",
+          }}
+        >
           <h3>A apărut o problemă la conexiunea cu serverul</h3>
           <p>{error}</p>
         </div>
       ) : (
         <PaginatedList
           items={favorites}
-          itemsPerPage={20}
           renderItem={(item) => <AdCard key={item.id} ad={item} />}
         />
       )}
