@@ -41,9 +41,7 @@ const Favorites = () => {
       {isLoading ? (
         <LoadingSpinner size={60} />
       ) : error ? (
-        <div
-          style={{ textAlign: "center", marginTop: "40px", color: "#d32f2f" }}
-        >
+        <div style={{ textAlign: "center", marginTop: "40px", color: "#666" }}>
           <h3>A apărut o problemă la conexiunea cu serverul</h3>
           <p>{error}</p>
         </div>
