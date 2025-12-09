@@ -11,7 +11,7 @@ router.get("/:id", async (req, res) => {
 
   try {
     const userQuery = `
-      SELECT id, first_name, last_name, email, phone_number, city, created_at 
+      SELECT id, first_name, last_name, created_at 
       FROM users
       WHERE id = $1;
     `;
@@ -26,21 +26,7 @@ router.get("/:id", async (req, res) => {
 
     const user = userResult.rows[0];
 
-    const adsQuery = `
-      SELECT id, title, price, currency, images, created_at, city
-      FROM ads
-      WHERE user_id = $1
-      ORDER BY created_at DESC;
-    `;
-
-    const adsResult = await db.query(adsQuery, [id]);
-
-    const response = {
-      ...user,
-      ads: adsResult.rows,
-    };
-
-    res.json(response);
+    res.json(user);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Eroare la preluarea profilului" });
@@ -118,7 +104,9 @@ router.put("/", authMiddleware, async (req, res) => {
       ]);
 
       if (emailCheckResult.rows.length > 0) {
-        return res.status(409).json({ error: "Acest email este deja utilizat de un alt cont." });
+        return res
+          .status(409)
+          .json({ error: "Acest email este deja utilizat de un alt cont." });
       }
     }
 
