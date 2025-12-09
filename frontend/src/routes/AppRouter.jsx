@@ -9,6 +9,7 @@ import NotFound from '../pages/not-found/NotFound';
 import Categories from '../pages/categories/Categories';
 import Favorites from '../pages/favorites/Favorites';
 import CategoryPage from '../pages/categories/CategoryPage';
+import ProfilePage from '../pages/profile/ProfilePage';
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,9 @@ const AppRouter = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
+
+      {/* Profile */}
+      <Route path="/profile" element={<ProfilePage />} />
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />

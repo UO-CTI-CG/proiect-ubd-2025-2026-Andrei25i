@@ -1,0 +1,118 @@
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #eeeeee;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.userDetails h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.infoRow {
+  margin: 0;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.label {
+  color: #666;
+  margin-right: 8px;
+  font-weight: 400;
+}
+
+.value {
+  font-weight: 500;
+}
+
+.metaInfo {
+  color: #999;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.actionsColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+}
+
+.editButton {
+  text-decoration: none;
+  padding: 10px 24px;
+  background-color: white;
+  border: 1px solid #ddd;
+  color: #333;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.editButton:hover {
+  border-color: #333;
+  background-color: #f9f9f9;
+}
+
+.logoutButton {
+  padding: 8px 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #555;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logoutButton:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.deleteLink {
+  background: none;
+  border: none;
+  color: #d32f2f;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.deleteLink:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 650px) {
+  .profileHeader {
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .userDetails {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .userDetails h1 {
+    text-align: center;
+  }
+
+  .editButton {
+    width: 100%;
+    max-width: 200px;
+  }
+}
