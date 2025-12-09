@@ -29,10 +29,7 @@ const ProfileAds = ({ userId }) => {
         </div>
       ) : ads.length === 0 ? (
         <div className={styles.emptyState}>
-          <p>Nu ai publicat niciun anunț încă.</p>
-          <Link to={"/add-ad"} className={styles.browseLink}>
-            Adaugați anunț nou
-          </Link>
+          <p>Niciun anunț publicat încă.</p>
         </div>
       ) : (
         <div className={styles.grid}>
