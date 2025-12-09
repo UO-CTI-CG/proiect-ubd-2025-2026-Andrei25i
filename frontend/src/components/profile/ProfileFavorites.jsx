@@ -15,7 +15,7 @@ const ProfileFavorites = () => {
   return (
     <div className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2>Favorite recente</h2>
+        <h2>Anunțuri favorite</h2>
         {favorites.length > 4 && (
           <Link to="/favorites" className={styles.seeMoreBtn}>
             Vezi toate ({favorites.length})

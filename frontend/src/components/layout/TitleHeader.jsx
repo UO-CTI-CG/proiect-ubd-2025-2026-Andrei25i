@@ -19,9 +19,11 @@ const TitleHeader = ({ loading, title, icon }) => {
           <LoadingSpinner />
         ) : (
           <>
-            <div className={styles.icon}>
-              <img src={icon} alt={`${title} icon`} />
-            </div>
+            {icon && (
+              <div className={styles.icon}>
+                <img src={icon} alt={`${title} icon`} />
+              </div>
+            )}
 
             <h1>{title}</h1>
           </>
