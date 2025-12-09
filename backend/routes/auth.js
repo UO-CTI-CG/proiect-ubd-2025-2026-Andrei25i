@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             payload,
             secret,
-            { expiresIn: '8h' }
+            { expiresIn: '24h' }
         );
 
         res.status(200).json({
@@ -88,7 +88,10 @@ router.post("/login", async (req, res) => {
                 id: user.id,
                 first_name: user.first_name,
                 last_name: user.last_name,
-                email: user.email
+                email: user.email,
+                phone: user.phone_number,
+                city: user.city,
+                created_at: user.created_at
             }
         });
     } catch (err) {
