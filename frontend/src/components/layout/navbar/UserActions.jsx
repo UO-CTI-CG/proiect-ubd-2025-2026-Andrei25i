@@ -1,13 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../../store/authStore";
+import { showConfirmation } from "../../../utils/ShowConfirmation";
 import Heart from "../../icons/Heart";
 import styles from "./Navbar.module.css";
 
 const UserActions = ({ user }) => {
   const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
+  
   const handleLogout = () => {
-    logout();
-    window.location.href = "/";
+    showConfirmation({
+      message: "Sigur vreți să vă deconectați?",
+      onConfirm: () => {
+        logout();
+        navigate("/login");
+      },
+    });
   };
 
   return (
