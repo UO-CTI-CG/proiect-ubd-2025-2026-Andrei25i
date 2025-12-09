@@ -164,7 +164,7 @@ const RegisterPage = () => {
           <label htmlFor="password">Confirmați parola *</label>
           <FormInput
             type={"password"}
-            id={"password"}
+            id={"password-confirm"}
             placeholder={"Introduceți din nou parola"}
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}

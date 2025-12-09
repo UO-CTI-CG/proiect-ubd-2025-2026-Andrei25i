@@ -71,7 +71,7 @@ router.delete("/", authMiddleware, async (req, res) => {
 
     if (!isMatch) {
       return res
-        .status(401)
+        .status(400)
         .json({ error: "Parola incorectă. Ștergerea contului a eșuat." });
     }
 

@@ -1,8 +1,13 @@
-import { useState, useEffect } from 'react';
-import locationsData from '../../data/romanian_locations.json';
-import styles from './LocationSelector.module.css';
+import { useState, useEffect } from "react";
+import locationsData from "../../data/romanian_locations.json";
+import styles from "./LocationSelector.module.css";
 
-const LocationSelector = ({ selectedCounty, selectedCity, onCountyChange, onCityChange }) => {
+const LocationSelector = ({
+  selectedCounty,
+  selectedCity,
+  onCountyChange,
+  onCityChange,
+}) => {
   const [availableCities, setAvailableCities] = useState([]);
 
   useEffect(() => {
@@ -17,7 +22,7 @@ const LocationSelector = ({ selectedCounty, selectedCity, onCountyChange, onCity
   const handleCountySelect = (e) => {
     const newCounty = e.target.value;
     onCountyChange(newCounty);
-    onCityChange(''); 
+    onCityChange("");
   };
 
   const countiesList = Object.keys(locationsData).sort();
@@ -26,11 +31,13 @@ const LocationSelector = ({ selectedCounty, selectedCity, onCountyChange, onCity
     <div className={styles.container}>
       <div className={styles.selectGroup}>
         <label htmlFor="judet">Județ *</label>
-        <select 
-          id="judet" 
-          value={selectedCounty} 
+        <select
+          id="judet"
+          value={selectedCounty}
           onChange={handleCountySelect}
-          className={`${styles.select} ${selectedCounty ? styles.hasValue : ''}`}
+          className={`${styles.select} ${
+            selectedCounty ? styles.hasValue : ""
+          }`}
           required
         >
           <option value="">Alegeți Județul</option>
@@ -44,27 +51,26 @@ const LocationSelector = ({ selectedCounty, selectedCity, onCountyChange, onCity
 
       <div className={styles.selectGroup}>
         <label htmlFor="localitate">Localitate *</label>
-        <select 
-          id="localitate" 
-          value={selectedCity} 
+        <select
+          id="localitate"
+          value={selectedCity}
           onChange={(e) => onCityChange(e.target.value)}
-          className={`${styles.select} ${selectedCity ? styles.hasValue : ''}`}
+          className={`${styles.select} ${selectedCity ? styles.hasValue : ""}`}
           disabled={!selectedCounty}
           required
         >
           <option value="">
             {selectedCounty ? "Alegeți localitatea" : "Selectați întâi județul"}
           </option>
-          {availableCities.map((city) => (
-            <option key={city} value={city}>
+          {availableCities.map((city, index) => (
+            <option key={`${selectedCounty}${index}`} value={city}>
               {city}
             </option>
           ))}
         </select>
       </div>
-
     </div>
   );
-}
+};
 
 export default LocationSelector;
