@@ -13,7 +13,7 @@ const SearchFilters = ({
 
   const [filters, setFilters] = useState({
     search: "",
-    categoryId: "",
+    category: "",
     minPrice: "",
     maxPrice: "",
     city: "",
