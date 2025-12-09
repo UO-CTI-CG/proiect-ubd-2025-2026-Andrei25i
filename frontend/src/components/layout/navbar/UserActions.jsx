@@ -6,8 +6,8 @@ import styles from "./Navbar.module.css";
 const UserActions = ({ user }) => {
   const logout = useAuthStore((state) => state.logout);
   const handleLogout = () => {
-    logout(); 
-    window.location.href = "/"; 
+    logout();
+    window.location.href = "/";
   };
 
   return (
@@ -19,8 +19,8 @@ const UserActions = ({ user }) => {
         </Link>
 
         <div className={styles.dropdownMenu}>
-          <button onClick={handleLogout} className={styles.signOutButton}>
-            Sign Out
+          <button onClick={handleLogout} className={styles.logoutButton}>
+            Log Out
           </button>
         </div>
       </div>

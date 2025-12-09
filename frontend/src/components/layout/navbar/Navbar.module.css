@@ -130,7 +130,7 @@
   display: block;
 }
 
-.signOutButton {
+.logoutButton {
   width: 100%;
   padding: 8px 0;
   display: flex;
@@ -147,7 +147,7 @@
   text-align: center;
 }
 
-.signOutButton:hover {
+.logoutButton:hover {
   background-color: #ffebee;
 }
 
