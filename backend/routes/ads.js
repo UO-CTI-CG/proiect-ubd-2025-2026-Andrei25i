@@ -6,7 +6,7 @@ const router = express.Router();
 
 // GET all ads with filters and sorting
 router.get("/", async (req, res) => {
-  const { search, category, minPrice, maxPrice, sort, city } = req.query;
+  const { search, category, minPrice, maxPrice, sort, city, userId } = req.query;
 
   let queryText = `
       SELECT 
@@ -44,6 +44,11 @@ router.get("/", async (req, res) => {
   if (city) {
     params.push(city);
     conditions.push(`ads.city ILIKE '%' || $${params.length} || '%'`);
+  }
+
+  if (userId) {
+    params.push(userId);
+    conditions.push(`ads.user_id = $${params.length}`);
   }
 
   if (conditions.length > 0) {
