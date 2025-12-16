@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 import useAuthStore from "../../store/authStore";
 import ProfileAds from "../../components/profile/ProfileAds";
@@ -7,11 +7,38 @@ import ProfileFavorites from "../../components/profile/ProfileFavorites";
 import { showConfirmation } from "../../utils/ShowConfirmation";
 import DeleteAccountModal from "../../components/modals/DeleteAccountModal";
 import styles from "./ProfilePage.module.css";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 
 const ProfilePage = () => {
-  const user = useAuthStore((state) => state.user);
+  const { id } = useParams();
+  const authUser = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
+
+  const [publicUser, setPublicUser] = useState(null);
+  const [loadingPublic, setLoadingPublic] = useState(false);
+
   const navigate = useNavigate();
+
+  const isOwnProfile = !id || (authUser && id === authUser.id.toString());
+
+  useEffect(() => {
+    if (id && !isOwnProfile) {
+      const fetchPublicProfile = async () => {
+        setLoadingPublic(true);
+        try {
+          const response = await api.get(`/user/${id}`);
+          setPublicUser(response.data);
+        } catch (err) {
+          console.error("Utilizatorul nu a fost găsit.");
+        } finally {
+          setLoadingPublic(false);
+        }
+      };
+      fetchPublicProfile();
+    }
+  }, [id, isOwnProfile]);
+
+  const displayUser = isOwnProfile ? authUser : publicUser;
 
   const handleLogout = () => {
     showConfirmation({
@@ -35,61 +62,78 @@ const ProfilePage = () => {
     navigate("/login");
   };
 
-  if (!user) return null;
+  if (loadingPublic) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
+        <LoadingSpinner size={60} />
+      </div>
+    );
+  }
+
+  if (!displayUser) return null;
 
   return (
     <>
       <div className={styles.profileHeader}>
         <div className={styles.userDetails}>
           <h1>
-            {user.first_name} {user.last_name}
+            {displayUser.first_name} {displayUser.last_name}
           </h1>
-          <p className={styles.infoRow}>
-            <span className={styles.label}>Email: </span>
-            <span className={styles.value}>{user.email}</span>
-          </p>
 
-          <p className={styles.infoRow}>
-            <span className={styles.label}>Telefon: </span>
-            <span className={styles.value}>{user.phone}</span>
-          </p>
+          {isOwnProfile && (
+            <>
+              <p className={styles.infoRow}>
+                <span className={styles.label}>Email: </span>
+                <span className={styles.value}>{displayUser.email}</span>
+              </p>
 
-          <p className={styles.infoRow}>
-            <span className={styles.label}>Adresă: </span>
-            <span className={styles.value}>{user.city}</span>
-          </p>
+              <p className={styles.infoRow}>
+                <span className={styles.label}>Telefon: </span>
+                <span className={styles.value}>{displayUser.phone}</span>
+              </p>
+
+              <p className={styles.infoRow}>
+                <span className={styles.label}>Adresă: </span>
+                <span className={styles.value}>{displayUser.city}</span>
+              </p>
+            </>
+          )}
+
           <p className={styles.metaInfo}>
             Cont creat în{" "}
-            {new Date(user.created_at).toLocaleDateString("ro-RO")}
+            {new Date(displayUser.created_at).toLocaleDateString("ro-RO")}
           </p>
         </div>
 
-        <div className={styles.actionsColumn}>
-          <Link to={"/profile/edit"} className={styles.editButton}>
-            Editează Profil
-          </Link>
+        {isOwnProfile && (
+          <div className={styles.actionsColumn}>
+            <Link to={"/profile/edit"} className={styles.editButton}>
+              Editează Profil
+            </Link>
 
-          <button onClick={handleLogout} className={styles.logoutButton}>
-            Log Out
-          </button>
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Log Out
+            </button>
 
-          <button
-            onClick={() => setIsDeleteModalOpen(true)}
-            className={styles.deleteLink}
-          >
-            Șterge Contul
-          </button>
-        </div>
+            <button
+              onClick={() => setIsDeleteModalOpen(true)}
+              className={styles.deleteLink}
+            >
+              Șterge Contul
+            </button>
+          </div>
+        )}
       </div>
 
-      <ProfileAds userId={user.id} />
-      <ProfileFavorites />
-
-      <DeleteAccountModal
-        isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
-        onConfirm={handleConfirmDelete}
-      />
+      <ProfileAds userId={displayUser.id} />
+      {isOwnProfile && <ProfileFavorites />}
+      {isOwnProfile && (
+        <DeleteAccountModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+        />
+      )}
     </>
   );
 };

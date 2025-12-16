@@ -4,20 +4,30 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import AdCard from "../../components/ui/AdCard";
 import styles from "./ProfileAds.module.css";
+import useAuthStore from "../../store/authStore";
 
 const ProfileAds = ({ userId }) => {
+  const authUser = useAuthStore((state) => state.user);
+  const isOwnProfile =
+    authUser && userId && authUser.id.toString() === userId.toString();
+
   const adsFilters = useMemo(() => {
     return userId ? { userId, sort: "date_desc" } : {};
   }, [userId]);
 
   const { ads, loading } = useAds(adsFilters);
 
+  const sectionTitle = isOwnProfile
+    ? "Anunțurile mele"
+    : "Anunțurile utilizatorului";
+  const seeMoreLink = isOwnProfile ? "/profile/ads" : `/profile/${userId}/ads`;
+
   return (
     <div className={styles.section}>
       <div className={styles.sectionHeader}>
-        <h2>Anunțurile mele</h2>
+        <h2>{sectionTitle}</h2>
         {ads.length > 4 && (
-          <Link to="/profile/ads" className={styles.seeMoreBtn}>
+          <Link to={seeMoreLink} className={styles.seeMoreBtn}>
             Vezi toate ({ads.length})
           </Link>
         )}
