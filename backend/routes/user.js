@@ -5,6 +5,31 @@ import bcrypt from "bcryptjs";
 
 const router = express.Router();
 
+// GET logged user details
+router.get("/me", authMiddleware, async (req, res) => {
+  try {
+    const loggedUserId = req.user.userId;
+
+    const userQuery = `
+    SELECT id, first_name, last_name, email, phone_number, city, created_at
+    FROM users
+    WHERE id = $1;
+  `;
+
+    const userResult = await db.query(userQuery, [loggedUserId]);
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: "Utilizatorul nu există." });
+    }
+
+    const user = userResult.rows[0];
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ error: "Eroare la server." });
+  }
+});
+
 // GET user details with their ads
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
