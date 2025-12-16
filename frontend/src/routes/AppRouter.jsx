@@ -11,6 +11,7 @@ import Favorites from "../pages/favorites/Favorites";
 import CategoryPage from "../pages/categories/CategoryPage";
 import ProfilePage from "../pages/profile/ProfilePage";
 import UserAdsList from "../components/profile/UserAdsList";
+import EditProfilePage from "../pages/categories/EditProfilePage";
 
 const AppRouter = () => {
   return (
@@ -33,7 +34,7 @@ const AppRouter = () => {
 
       {/* Profile */}
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/profile/edit" element={<NotFound />} />
+      <Route path="/profile/edit" element={<EditProfilePage />} />
       <Route path="/profile/ads" element={<UserAdsList />} />
       <Route path="/profile/:id" element={<ProfilePage />} />
       <Route path="/profile/:id/ads" element={<UserAdsList />} />
