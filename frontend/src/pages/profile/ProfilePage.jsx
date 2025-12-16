@@ -89,7 +89,7 @@ const ProfilePage = () => {
 
               <p className={styles.infoRow}>
                 <span className={styles.label}>Telefon: </span>
-                <span className={styles.value}>{displayUser.phone}</span>
+                <span className={styles.value}>{displayUser.phone_number}</span>
               </p>
 
               <p className={styles.infoRow}>

@@ -8,7 +8,7 @@ import useFavoritesStore from "./store/favoritesStore";
 import { useEffect } from "react";
 
 function App() {
-  const { user } = useAuthStore();
+  const { user, refreshUser, token } = useAuthStore();
   const { fetchFavorites, clearFavorites } = useFavoritesStore();
 
   useEffect(() => {
@@ -18,6 +18,12 @@ function App() {
       clearFavorites();
     }
   }, [user, fetchFavorites, clearFavorites]);
+
+  useEffect(() => {
+    if (token) {
+      refreshUser();
+    }
+  }, [refreshUser, token]);
 
   return (
     <BrowserRouter>
