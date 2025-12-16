@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import FormInput from "../../components/ui/FormInput";
 import LocationSelector from "../../components/ui/LocationSelector";
 import ArrowIcon from "../../components/icons/ArrowIcon";
+import { isValidPhone } from "../../utils/validators";
 import styles from "./Login.module.css";
 
 const RegisterPage = () => {
@@ -25,10 +26,8 @@ const RegisterPage = () => {
   const handlePhoneChange = (e) => {
     const val = e.target.value;
 
-    if (/^\+?\d*$/.test(val)) {
-      if (val.length <= 16) {
-        setPhone(val);
-      }
+    if (isValidPhone(val)) {
+      setPhone(val);
     }
   };
 
@@ -98,6 +97,7 @@ const RegisterPage = () => {
               placeholder={"Nume"}
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              autoComplete="off"
               required
             />
           </div>
@@ -110,6 +110,7 @@ const RegisterPage = () => {
               placeholder={"Prenume"}
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              autoComplete="off"
               required
             />
           </div>
@@ -123,6 +124,7 @@ const RegisterPage = () => {
             placeholder={"Introduceți numărul de telefon"}
             value={phone}
             onChange={(e) => handlePhoneChange(e)}
+            autoComplete="off"
             required
           />
         </div>
