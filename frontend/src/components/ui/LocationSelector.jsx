@@ -7,6 +7,7 @@ const LocationSelector = ({
   selectedCity,
   onCountyChange,
   onCityChange,
+  register=true
 }) => {
   const [availableCities, setAvailableCities] = useState([]);
 
@@ -30,7 +31,7 @@ const LocationSelector = ({
   return (
     <div className={styles.container}>
       <div className={styles.selectGroup}>
-        <label htmlFor="judet">Județ *</label>
+        <label htmlFor="judet">Județ {register ? "*" : ""}</label>
         <select
           id="judet"
           value={selectedCounty}
@@ -50,7 +51,7 @@ const LocationSelector = ({
       </div>
 
       <div className={styles.selectGroup}>
-        <label htmlFor="localitate">Localitate *</label>
+        <label htmlFor="localitate">Localitate {register ? "*" : ""}</label>
         <select
           id="localitate"
           value={selectedCity}
