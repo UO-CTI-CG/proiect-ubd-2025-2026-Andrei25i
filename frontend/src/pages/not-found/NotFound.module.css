@@ -7,35 +7,21 @@
   padding: 10px 20px;
 }
 
-.notFoundContainer .backButton {
-  background-color: #1b1b1b;
-  align-self: flex-start;
-  margin-left: 4%;
-  margin-bottom: 2%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
 @media only screen and (max-width: 850px) {
-  .notFoundContainer .backButton {
-    margin-bottom: 5%;
+  .notFoundContainer h1 {
+    margin-top: 5%;
   }
 }
 
 @media only screen and (max-width: 550px) {
-  .notFoundContainer .backButton {
-    margin-bottom: 8%;
+  .notFoundContainer h1 {
+    margin-top: 8%;
   }
 }
 
 .notFoundContainer h1 {
   font-size: 110px;
-  color: #4376FB;
+  color: #4376fb;
 }
 
 .notFoundContainer h2 {
@@ -55,7 +41,7 @@
 .homeButton {
   display: inline-block;
   padding: 12px 25px;
-  background-color: #4376FB;
+  background-color: #4376fb;
   color: white;
   text-decoration: none;
   border-radius: 5px;
