@@ -14,3 +14,8 @@
   animation: spin 0.8s linear infinite;
   box-sizing: border-box;
 }
+
+.center {
+  align-items: center;
+  height: 70vh;
+}

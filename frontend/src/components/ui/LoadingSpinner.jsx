@@ -5,9 +5,13 @@ const LoadingSpinner = ({
   color = "#4376FB",
   thickness = 4,
   className = "",
+  full,
 }) => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      className={`${full ? styles.center : ""}`}
+      style={{ display: "flex", justifyContent: "center" }}
+    >
       <div
         className={`${styles.spinner} ${className}`}
         style={{
