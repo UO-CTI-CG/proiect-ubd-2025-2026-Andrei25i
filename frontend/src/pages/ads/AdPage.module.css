@@ -1,0 +1,195 @@
+.adContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.adGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0px;
+  width: 100%;
+}
+
+@media (min-width: 950px) {
+  .adGrid {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 50px;
+  }
+}
+
+.mainContent {
+  min-width: 0;
+  width: 100%;
+}
+
+.sidebar {
+  min-width: 0;
+}
+
+.adGalleryWrapper {
+  --swiper-navigation-color: #4376fb;
+  --swiper-pagination-color: #4376fb;
+  --swiper-pagination-bullet-inactive-color: #94a3b8;
+  --swiper-pagination-bullet-inactive-opacity: 0.5;
+
+  --swiper-navigation-size: 35px;
+
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 400px;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
+  height: 400px;
+  margin-bottom: 50px;
+}
+
+.adGalleryWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.adGalleryWrapper :global(.swiper) {
+  width: 100%;
+  height: 100%;
+}
+
+.adCard {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+}
+
+.adCard h3 {
+  margin-bottom: 10px;
+}
+
+.categoryBadge {
+  display: inline-block;
+  background-color: #f1f5f9;
+  color: #333;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  text-decoration: none;
+}
+
+.adLocation {
+  color: #666;
+  font-weight: 500;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.adTitleMain {
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.adDescription {
+  font-size: 16px;
+  white-space: pre-line;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+
+.sidebar {
+  position: relative;
+}
+
+.sidebarSticky {
+  position: sticky;
+  top: 150px;
+}
+
+.adPrice {
+  font-size: clamp(30px, 2vw, 38px);
+  font-weight: 800;
+  color: #4376fb;
+  margin-bottom: 20px;
+}
+
+.sellerBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin-top: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.sellerBox:hover {
+  background-color: #f1f5f9;
+}
+
+.sellerAvatar {
+  width: 48px;
+  height: 48px;
+  background: #eff6ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid #dbeafe;
+}
+
+.contactActions {
+  margin-top: 20px;
+}
+
+.btnPrimary {
+  width: 100%;
+  height: 60px;
+  background-color: #4376fb;
+  color: white;
+  padding: 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btnPrimary:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.btnPrimary:active {
+  transform: translateY(3px);
+}
+
+.phoneWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.callIcon {
+  width: 24px;
+  height: 24px;
+}

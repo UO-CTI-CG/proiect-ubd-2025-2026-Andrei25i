@@ -12,6 +12,7 @@ import CategoryPage from "../pages/categories/CategoryPage";
 import ProfilePage from "../pages/profile/ProfilePage";
 import UserAdsList from "../components/profile/UserAdsList";
 import EditProfilePage from "../pages/categories/EditProfilePage";
+import AdPage from "../pages/ads/AdPage";
 
 const AppRouter = () => {
   return (
@@ -38,6 +39,9 @@ const AppRouter = () => {
       <Route path="/profile/ads" element={<UserAdsList />} />
       <Route path="/profile/:id" element={<ProfilePage />} />
       <Route path="/profile/:id/ads" element={<UserAdsList />} />
+
+      {/* Ad */}
+      <Route path="/ads/:id" element={<AdPage />} />
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
