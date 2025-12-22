@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import api from "../../services/api";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import formatPrice from "../../utils/formatPrice";
+import NotFound from "../not-found/NotFound";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -14,6 +15,7 @@ import styles from "./AdPage.module.css";
 import { formatPhoneNumber } from "../../utils/formatPhoneNumber";
 
 import callIcon from "../../assets/call.svg";
+import AdActionsBar from "../../components/ui/AdActionsBar";
 
 const AdPage = () => {
   const { id } = useParams();
@@ -37,10 +39,12 @@ const AdPage = () => {
   }, [id]);
 
   if (loading) return <LoadingSpinner size={60} full />;
-  if (!ad) return <></>;
+  if (!ad) return <NotFound />;
 
   return (
     <div className={styles.adContainer}>
+      <AdActionsBar ad={ad} />
+
       <div className={styles.adGrid}>
         {/* Left column */}
         <div className={styles.mainContent}>

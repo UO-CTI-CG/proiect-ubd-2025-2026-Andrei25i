@@ -65,7 +65,7 @@ const ProfilePage = () => {
   if (loadingPublic) {
     return (
       <div style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
-        <LoadingSpinner size={60} />
+        <LoadingSpinner size={60} full />
       </div>
     );
   }
