@@ -2,11 +2,19 @@ import express from "express";
 import db from "../db.js";
 import authMiddleware from "../middleware/auth.js";
 
+import cloudinary from "cloudinary";
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const router = express.Router();
 
 // GET all ads with filters and sorting
 router.get("/", async (req, res) => {
-  const { search, category, minPrice, maxPrice, sort, city, userId } = req.query;
+  const { search, category, minPrice, maxPrice, sort, city, userId } =
+    req.query;
 
   let queryText = `
       SELECT 
@@ -123,9 +131,18 @@ router.get("/:id", async (req, res) => {
 router.post("/", authMiddleware, async (req, res) => {
   const loggedUserId = req.user.userId;
 
-  const { title, description, price, currency, images, category_id, city } = req.body;
+  const { title, description, price, currency, images, category_id, city } =
+    req.body;
 
-  if (!title || !description || !price || !images || images.length === 0 || !category_id || !city) {
+  if (
+    !title ||
+    !description ||
+    !price ||
+    !images ||
+    images.length === 0 ||
+    !category_id ||
+    !city
+  ) {
     return res.status(400).json({
       error: "Toate câmpurile și cel puțin o imagine sunt obligatorii.",
     });
@@ -142,7 +159,7 @@ router.post("/", authMiddleware, async (req, res) => {
       title,
       description,
       price,
-      currency || 'RON',
+      currency || "RON",
       JSON.stringify(images),
       loggedUserId,
       category_id,
@@ -165,26 +182,44 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   const loggedUserId = req.user.userId;
 
   try {
-    const checkOwnerQuery = `SELECT user_id FROM ads WHERE id = $1;`;
-    const result = await db.query(checkOwnerQuery, [id]);
+    const getAdQuery = `SELECT user_id, images FROM ads WHERE id = $1;`;
+    const result = await db.query(getAdQuery, [id]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Anunțul nu a fost găsit." });
     }
 
-    const adOwnerId = result.rows[0].user_id;
+    const ad = result.rows[0];
 
-    if (adOwnerId !== loggedUserId) {
+    if (ad.user_id !== loggedUserId) {
       return res.status(403).json({
         error:
           "Acțiune interzisă. Nu aveți permisiunea să ștergeți acest anunț",
       });
     }
 
+    if (ad.images && Array.isArray(ad.images) && ad.images.length > 0) {
+      try {
+        const deletePromises = ad.images.map((img) => {
+          if (img.public_id) {
+            return cloudinary.uploader.destroy(img.public_id);
+          }
+          return Promise.resolve();
+        });
+
+        await Promise.all(deletePromises);
+      } catch (cloudinaryErr) {
+        onsole.error(
+          "Eroare la ștergerea fișierelor din Cloudinary:",
+          cloudinaryErr
+        );
+      }
+    }
+
     const deleteQuery = `DELETE FROM ads WHERE id = $1;`;
     await db.query(deleteQuery, [id]);
 
-    res.status(200).json({ message: "Anunțul a foșt sters cu succes." });
+    res.status(200).json({ message: "Anunțul a fost șters cu succes." });
   } catch (err) {
     console.error("Eroare la ștergerea anunțului.");
     res.status(500).json({ error: "Eroare internă a serverului." });
@@ -196,9 +231,18 @@ router.put("/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
   const loggedUserId = req.user.userId;
 
-  const { title, description, price, currency, images, category_id, city } = req.body;
+  const { title, description, price, currency, images, category_id, city } =
+    req.body;
 
-  if (!title || !description || !price || !images || images.length === 0 || !category_id || !city) {
+  if (
+    !title ||
+    !description ||
+    !price ||
+    !images ||
+    images.length === 0 ||
+    !category_id ||
+    !city
+  ) {
     return res.status(400).json({ error: "Toate câmpurile sunt obligatorii." });
   }
 
@@ -234,7 +278,16 @@ router.put("/:id", authMiddleware, async (req, res) => {
       RETURNING *;
     `;
 
-    const values = [title, description, price, currency || 'RON', JSON.stringify(images), category_id, city, id];
+    const values = [
+      title,
+      description,
+      price,
+      currency || "RON",
+      JSON.stringify(images),
+      category_id,
+      city,
+      id,
+    ];
     const result = await db.query(updateQuery, values);
     res.status(200).json(result.rows[0]);
   } catch (err) {
