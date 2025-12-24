@@ -20,9 +20,7 @@ const CategorySelector = ({
         name="category"
         value={selectedCategory}
         onChange={(e) => onCategoryChange(e.target.value)}
-        className={`${styles.select} ${
-          selectedCategory ? styles.hasValue : ""
-        }`}
+        className={`${styles.select} ${styles.hasValue}`}
         disabled={loading}
         required={required}
       >
