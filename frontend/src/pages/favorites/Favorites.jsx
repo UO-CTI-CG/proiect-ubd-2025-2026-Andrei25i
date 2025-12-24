@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from "react";
 import useFavoritesStore from "../../store/favoritesStore";
-import useCategories from "../../hooks/useCategories";
 import TitleHeader from "../../components/layout/TitleHeader";
 import SearchFilters from "../../components/results/SearchFilters";
 import AdCard from "../../components/ui/AdCard";
@@ -14,8 +13,6 @@ const Favorites = () => {
   const fetchFavorites = useFavoritesStore((state) => state.fetchFavorites);
   const isLoading = useFavoritesStore((state) => state.isLoading);
   const error = useFavoritesStore((state) => state.error);
-
-  const { categories } = useCategories({ sort: "name_asc" });
 
   useEffect(() => {
     fetchFavorites();
@@ -34,7 +31,6 @@ const Favorites = () => {
 
       <SearchFilters
         onFilterChange={handleFilterChange}
-        categories={categories}
         sortOptions={FAVORITES_SORT_OPTIONS}
       />
 

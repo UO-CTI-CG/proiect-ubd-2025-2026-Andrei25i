@@ -1,11 +1,11 @@
 .container {
   display: flex;
-  gap: 40px; 
+  gap: 40px;
   width: 100%;
 }
 
 .selectGroup {
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -17,13 +17,15 @@
 }
 
 .select {
-  padding: 15px;
+  width: 100%;
+  max-width: 300px;
+  height: 40px;
+  padding: 10px 14px;
   background-color: white;
   outline: none;
   border: solid 1px #ddd;
   border-radius: 7px;
   font-size: 15px;
-  width: 100%;
   cursor: pointer;
   color: #9ea7ba;
   transition: border-color 0.2s, box-shadow 0.2s;
@@ -52,5 +54,11 @@
   .container {
     flex-direction: column;
     gap: 15px;
+  }
+}
+
+@media (max-width: 529px) {
+  .select {
+    max-width: 350px;
   }
 }

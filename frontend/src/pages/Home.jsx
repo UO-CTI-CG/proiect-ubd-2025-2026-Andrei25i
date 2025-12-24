@@ -1,7 +1,6 @@
 import { useState } from "react";
 import FeaturedCategories from "../components/categories/FeaturedCategories";
 import SearchFilters from "../components/results/SearchFilters";
-import useCategories from "../hooks/useCategories";
 import { ADS_SORT_OPTIONS } from "../utils/sortOptions";
 import PaginatedList from "../components/ui/PaginatedList";
 import AdCard from "../components/ui/AdCard";
@@ -19,7 +18,6 @@ export default function Home() {
   });
 
   const { ads, loading, error } = useAds(filters);
-  const { categories } = useCategories({ sort: "name_asc" });
 
   const handleFilterChange = (newFilters) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
@@ -31,7 +29,6 @@ export default function Home() {
 
       <SearchFilters
         onFilterChange={handleFilterChange}
-        categories={categories}
         sortOptions={ADS_SORT_OPTIONS}
       />
 

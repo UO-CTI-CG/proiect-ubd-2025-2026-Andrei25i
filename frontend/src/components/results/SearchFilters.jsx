@@ -2,10 +2,10 @@ import { useState } from "react";
 import romanian_locations from "../../data/romanian_locations.json";
 import searchIcon from "../../assets/searchIcon.svg";
 import styles from "./SearchFilters.module.css";
+import CategorySelector from "../ui/CategorySelector";
 
 const SearchFilters = ({
   onFilterChange,
-  categories = [],
   sortOptions = [],
   showCategorySelect = true,
 }) => {
@@ -105,19 +105,15 @@ const SearchFilters = ({
         </div>
 
         {showCategorySelect && (
-          <select
-            name="category"
-            value={filters.category}
-            onChange={handleChange}
-            className={styles.select}
-          >
-            <option value="">Toate categoriile</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
+          <CategorySelector
+            selectedCategory={filters.category}
+            onCategoryChange={(val) =>
+              handleChange({
+                target: { name: "category", value: val },
+              })
+            }
+            showLabel={false}
+          />
         )}
 
         <select
