@@ -5,7 +5,7 @@ import styles from "./Navbar.module.css";
 
 const AddButton = () => {
   return (
-    <Link to="/new-ad" className={styles.newAdButton}>
+    <Link to="/create-ad" className={styles.newAdButton}>
       <img src={plusIcon} alt="+" />
       <p>Anunț nou</p>
     </Link>

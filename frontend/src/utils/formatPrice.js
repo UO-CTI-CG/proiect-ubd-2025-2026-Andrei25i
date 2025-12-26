@@ -5,7 +5,7 @@ const formatPrice = (price, currency = 'RON') => {
     style: 'currency',
     currency: currency,
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 2,
   }).format(price);
 };
 
