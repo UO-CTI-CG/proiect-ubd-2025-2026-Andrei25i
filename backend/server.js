@@ -23,6 +23,6 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authLimiter, authRouter);
 app.use("/api/favorites", favoritesRouter)
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Serverul ruleaza pe http://localhost:${PORT}`);
 })
