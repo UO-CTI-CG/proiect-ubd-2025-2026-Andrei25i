@@ -231,8 +231,16 @@ router.put("/:id", authMiddleware, async (req, res) => {
   const { id } = req.params;
   const loggedUserId = req.user.userId;
 
-  const { title, description, price, currency, images, category_id, city } =
-    req.body;
+  const {
+    title,
+    description,
+    price,
+    currency,
+    images,
+    category_id,
+    city,
+    deletedPublicIds,
+  } = req.body;
 
   if (
     !title ||
@@ -289,6 +297,23 @@ router.put("/:id", authMiddleware, async (req, res) => {
       id,
     ];
     const result = await db.query(updateQuery, values);
+
+    if (
+      deletedPublicIds &&
+      Array.isArray(deletedPublicIds) &&
+      deletedPublicIds.length > 0
+    ) {
+      const deletePromises = deletedPublicIds.map((public_id) => {
+        return cloudinary.uploader.destroy(public_id);
+      });
+
+      try {
+        await Promise.all(deletePromises);
+      } catch (err) {
+        console.error("Eroare la ștergerea din Cloudinary:", cloudErr);
+      }
+    }
+
     res.status(200).json(result.rows[0]);
   } catch (err) {
     console.error("Eroare la actualizarea anunțului:", err);
