@@ -25,22 +25,29 @@ const ImageSelector = ({ images, onImageChange, onImageRemove }) => {
 
       {images.length > 0 && (
         <div className={styles.previewContainer}>
-          {images.map((file, index) => (
-            <div key={index} className={styles.previewItem}>
-              <img
-                src={URL.createObjectURL(file)}
-                alt={`preview ${index}`}
-                className={styles.thumbnail}
-              />
-              <button
-                type="button"
-                onClick={() => onImageRemove(index)}
-                className={styles.removeBtn}
+          {images.map((img, index) => {
+            const imageSource = img.isExisting ? img.url : img.preview;
+
+            return (
+              <div
+                key={img.public_id || img.preview || index}
+                className={styles.previewItem}
               >
-                &times;
-              </button>
-            </div>
-          ))}
+                <img
+                  src={imageSource}
+                  alt={`preview ${index}`}
+                  className={styles.thumbnail}
+                />
+                <button
+                  type="button"
+                  onClick={() => onImageRemove(index)}
+                  className={styles.removeBtn}
+                >
+                  &times;
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
 

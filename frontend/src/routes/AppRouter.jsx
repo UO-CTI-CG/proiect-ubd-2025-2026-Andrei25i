@@ -14,6 +14,7 @@ import UserAdsList from "../components/profile/UserAdsList";
 import EditProfilePage from "../pages/categories/EditProfilePage";
 import AdPage from "../pages/ads/AdPage";
 import CreateAd from "../pages/ads/CreateAd";
+import EditAd from "../pages/ads/EditAd";
 
 const AppRouter = () => {
   return (
@@ -44,6 +45,7 @@ const AppRouter = () => {
       {/* Ads */}
       <Route path="/ads/:id" element={<AdPage />} />
       <Route path="/create-ad" element={<CreateAd />} />
+      <Route path="/ads/:id/edit" element={<EditAd />} />
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />
