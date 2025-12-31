@@ -8,6 +8,7 @@ import { showConfirmation } from "../../utils/ShowConfirmation";
 import DeleteAccountModal from "../../components/modals/DeleteAccountModal";
 import styles from "./ProfilePage.module.css";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
+import BackIcon from "../../components/icons/BackIcon";
 
 const ProfilePage = () => {
   const { id } = useParams();
@@ -75,34 +76,42 @@ const ProfilePage = () => {
   return (
     <>
       <div className={styles.profileHeader}>
-        <div className={styles.userDetails}>
-          <h1>
-            {displayUser.first_name} {displayUser.last_name}
-          </h1>
+        <div className={styles.profileTitle}>
+          <div className={styles.backButton} onClick={() => navigate(-1)}>
+            <BackIcon />
+          </div>
 
-          {isOwnProfile && (
-            <>
-              <p className={styles.infoRow}>
-                <span className={styles.label}>Email: </span>
-                <span className={styles.value}>{displayUser.email}</span>
-              </p>
+          <div className={styles.userDetails}>
+            <h1>
+              {displayUser.first_name} {displayUser.last_name}
+            </h1>
 
-              <p className={styles.infoRow}>
-                <span className={styles.label}>Telefon: </span>
-                <span className={styles.value}>{displayUser.phone_number}</span>
-              </p>
+            {isOwnProfile && (
+              <>
+                <p className={styles.infoRow}>
+                  <span className={styles.label}>Email: </span>
+                  <span className={styles.value}>{displayUser.email}</span>
+                </p>
 
-              <p className={styles.infoRow}>
-                <span className={styles.label}>Adresă: </span>
-                <span className={styles.value}>{displayUser.city}</span>
-              </p>
-            </>
-          )}
+                <p className={styles.infoRow}>
+                  <span className={styles.label}>Telefon: </span>
+                  <span className={styles.value}>
+                    {displayUser.phone_number}
+                  </span>
+                </p>
 
-          <p className={styles.metaInfo}>
-            Cont creat în{" "}
-            {new Date(displayUser.created_at).toLocaleDateString("ro-RO")}
-          </p>
+                <p className={styles.infoRow}>
+                  <span className={styles.label}>Adresă: </span>
+                  <span className={styles.value}>{displayUser.city}</span>
+                </p>
+              </>
+            )}
+
+            <p className={styles.metaInfo}>
+              Cont creat în{" "}
+              {new Date(displayUser.created_at).toLocaleDateString("ro-RO")}
+            </p>
+          </div>
         </div>
 
         {isOwnProfile && (

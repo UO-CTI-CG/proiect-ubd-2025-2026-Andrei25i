@@ -10,6 +10,23 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
+.profileTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+}
+
+.backButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  color: #9ea7ba;
+  cursor: pointer;
+}
+
 .userDetails h1 {
   font-size: 26px;
   font-weight: 700;
@@ -94,12 +111,15 @@
   text-decoration: underline;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
   .profileHeader {
     flex-direction: column;
-    text-align: center;
     gap: 24px;
-    padding: 24px;
+    padding: 15px;
+  }
+
+  .profileTitle {
+    gap: 30px;
   }
 
   .userDetails {
@@ -114,5 +134,16 @@
   .editButton {
     width: 100%;
     max-width: 200px;
+  }
+}
+
+@media only screen and (max-width: 430px) {
+  .backButton {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profileTitle {
+    gap: 20px;
   }
 }
