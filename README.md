@@ -85,3 +85,12 @@ cd frontend
 npm run dev
 ```
 Aplicația va fi disponibilă la adresa afișată în consolă.
+
+---
+## 🔗 Link Demo
+
+Aplicația este live și poate fi testată accesând următorul link:
+
+**[Live Demo](https://revinde.onrender.com)**
+
+> **Notă importantă:** Deoarece aplicația este găzduită pe un plan gratuit Render, serverul intră în modul "sleep" după o perioadă de inactivitate. La prima accesare, s-ar putea să dureze aproximativ **30-50 de secunde** până când serverul se pornește și datele sunt afișate.
